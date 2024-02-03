@@ -4,27 +4,30 @@ class Sprite {
     position,
     imageSrc,
     scale = 1,
-    frameRows = 1,
+    rows = 1,
     cols = 1,
-    width,
-    height,
+    srcDims= {width: 0, height:0},
+    frDims= {width: 0, height:0}
 
   }) {
 
     this.position = position
-    this.width = width
-    this.height = height
+    this.srcDims = srcDims
+    this.frDims = frDims
 
     this.image = new Image()
     this.image.src = imageSrc
     this.scale = scale
 
-    this.frameRows = frameRows
+    this.rows = rows
     this.cols = cols
+
+
     this.framesCurrent = 0
     this.framesElapsed = 0
-    this.framesHold = 8
+    this.framesHold = 12
 
+    
   }
 
 
@@ -41,20 +44,20 @@ class Sprite {
       this.image,
       
       // sx, sy
-      this.framesCurrent * (this.image.width / this.cols),
-      0,
+      this.framesCurrent * (this.srcDims.width / this.cols),
+      this.frDims.height * 8,
 
       // sWidth, sHeight
-      this.image.width / this.cols,
-      this.image.height,
+      this.srcDims.width / this.cols,
+      this.srcDims.height / this.rows,
 
-      // dx, dy
+      // frame position to be drawn on target canvas
       this.position.x, 
       this.position.y, 
       
-      // dWidth, dHeight
-      (this.image.width / this.cols) * this.scale,
-      this.image.height * this.scale
+      // width & height of redrawn frame
+      this.frDims.width  * this.scale,
+      this.frDims.height * this.scale
     )
   }
 

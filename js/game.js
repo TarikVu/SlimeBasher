@@ -2,12 +2,9 @@ class Game {
     constructor() {
 
 
-        this.background = new Sprite({
-            position: { x: 0, y: 0 },
-            imageSrc: './img/field.png',
-            width: canvas.width,
-            height: canvas.height
-        })
+
+        this.background = new Image()
+        this.background.src = './img/field.png'
 
         const shop = new Sprite({
             position: { x: 100, y: 600 },
@@ -19,21 +16,28 @@ class Game {
             height:150
         })
 
+
         // MAKE METHODS FOR SPLITTING UP SHEET 
         // AND SETTING DIFFERENT ANIMATION Sections
         const mc = new Sprite({
-            position: { x: 100, y: 650 },
+            position: { x: 100, y: 0 },
             imageSrc: './img/mc-sheet.png',
-            scale: 4,
-            rows: 1,
+            scale: 3.5,
+            rows: 11,
             cols: 7,
-            width: 50,
-            height: 37
+            // Source image dimensions 
+            srcDims: {width: 350, height: 407},
+            frDims: {width: 50, height: 37}
         })
 
+        
+
+
+
         this.sprites = []
-        this.sprites.push(shop)
+        //this.sprites.push(shop)
         this.sprites.push(mc)
+        console.log(mc)
 
        // this.sprites.push(this.background)
     }
@@ -45,7 +49,7 @@ class Game {
 
     draw() {
 
-        ctx.drawImage(this.background.image,0,0,canvas.width,canvas.height)
+        ctx.drawImage(this.background,0,0,canvas.width,canvas.height)
         this.sprites.forEach((element) => element.update());
     }
 

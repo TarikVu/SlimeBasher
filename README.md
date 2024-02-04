@@ -4,7 +4,7 @@ Deepwood is a basic game composed of HTML5, CANVAS, and JavaScript.
 ## Table of Contents
 1. [Features](#feats)
 1. [Design](#design)
-1. [References](#ref)
+1. [References](#refs)
 
 ## <a name="feats"></a> Features
 ### secondary headline
@@ -24,17 +24,16 @@ The Game world is seperated into different scripts to handle View, Modeling, and
     
 ## <a name="refs"></a> References 
 ### Functionality
-  Canvas API
-    - [2D Context drawImage()](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage)
+Canvas API
+- [2D Context drawImage()](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage)
 
-  60 FPS animation
-    - [Stackoverflow](https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe)
+60 FPS animation
+- [Stackoverflow](https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe)
 
-  Preloading images as a "promise"
-    - [codepen.io](https://codepen.io/isakov/pen/pogvWPY?editors=0010)
+Preloading images as a "promise"
+- [codepen.io](https://codepen.io/isakov/pen/pogvWPY?editors=0010)
 
-### Assets
-  Free sprite assets
-    - [Main Character](https://rvros.itch.io/animated-pixel-hero)
-    - [Backgrounds](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
-    - [Enviroment Assets](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
+### Free Assets
+- [Main Character](https://rvros.itch.io/animated-pixel-hero)
+- [Backgrounds](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
+- [Enviroment Assets](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)

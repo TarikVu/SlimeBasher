@@ -10,17 +10,23 @@ Deepwood is a basic game composed of HTML5, CANVAS, and JavaScript.
 ### secondary headline
 TBD
 
+## <a name="pfeats"></a> PlannedFeatures
+- In browser level editor
+- Saving local progression data
+- Upload level designs to MONGODB
+
 
 ## <a name="design"></a> Design
 The Game world is seperated into different scripts to handle View, Modeling, and Controlling the sprites on screen (MVC).
 
 - Custom Spritesheet class
     - Sheets are preloaded within a promise call in js.  This allows the image to provide the sprites.js file with the correct dimensions.  Otherwise the image width and height would be asynchronously loaded seperately and the sprites class would be unable to crop properly.  This workout prevents having to provide the image dimensions manually during the Spritesheet class construction time. 
+    - The "setAnimation" method takes a string name for an animation as well as the starting and ending rows and collumns of an animation. 
     
     - A Spritesheet class will be able to handle varying .png files:
-      - A single static sprite
-      - A sheet with one row of animations for a sprite (defaulted animation)
-      - An equilateral sprite sheet.  In this case the user must set the default animation for a sprite by providing the starting row and col for the animation as well as the ending row and col.  
+      -[x] A single static sprite
+      -[x]A sheet with one row of animations for a sprite (defaulted animation)
+      -[]An equilateral sprite sheet.  In this case the user must set the default animation for a sprite by providing the starting row and col for the animation as well as the ending row and col.  
     
 ## <a name="refs"></a> References 
 ### Functionality

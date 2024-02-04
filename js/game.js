@@ -16,10 +16,11 @@ class Game {
         // List of path's to the sprite sheets
         const imageUrls = [
             './img/shop.png',
-            './img/mc-sheet.png'
+            './img/mc-sheet.png',
+            './img/lamp.png'
         ];
 
-        
+
         // Used to load images (ref README)
         const loadImage = src =>
             new Promise((resolve, reject) => {
@@ -29,12 +30,11 @@ class Game {
                 img.src = src;
             });
 
-        
+
         // Loads the Images as a promise and then constructs Sprites
         Promise.all(imageUrls.map(loadImage)).then(images => {
 
-            // Adds to dictionary
-            // The key of the image file is
+            // Adds to dict. The key of the image file is
             // the full file name within the "img" folder.
             images.forEach((image) =>
                 finishedimages[image.src.split('img/').pop()] = image
@@ -47,23 +47,32 @@ class Game {
                 position: { x: 300, y: 300 },
                 ColRow: { cols: 6, rows: 1 },
             })
- 
-             const mc = new SpriteSheet({
+
+            const mc = new SpriteSheet({
                 image: finishedimages["mc-sheet.png"],
                 scale: 3.5,
-                position: {x: 300, y: 300},
+                position: { x: 300, y: 300 },
                 ColRow: { cols: 7, rows: 11 },
-            }) 
-    
-            
+            })
+            mc.setAnimation("attack1",[0,6],[3,7])
+
+            const lamp = new SpriteSheet({
+                image: finishedimages["lamp.png"],
+                scale: 2.5,
+                position: { x: 300, y: 300 }
+            })
+
+
             // Push to list of sprites to be drawn. 
             this.sprites.push(shop)
-    
+            this.sprites.push(mc)
+            this.sprites.push(lamp)
+
         })
     }
 
 
-    
+
 
     // Draws the game world.
     // BG first, then list of sprites. 

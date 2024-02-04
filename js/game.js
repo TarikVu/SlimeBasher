@@ -44,6 +44,7 @@ class Game {
             const shop = new SpriteSheet({
                 image: finishedimages["shop.png"],
                 scale: 3.5,
+                framesHold: 8,
                 position: { x: 300, y: 300 },
                 ColRow: { cols: 6, rows: 1 },
             })
@@ -54,7 +55,10 @@ class Game {
                 position: { x: 300, y: 300 },
                 ColRow: { cols: 7, rows: 11 },
             })
-            mc.setAnimation("attack1",[0,6],[3,7])
+
+            // col, row
+            mc.setAnimation("idle", 15, { col: 0, row: 0 }, { col: 3, row: 0 })
+            mc.playAnimation("idle")
 
             const lamp = new SpriteSheet({
                 image: finishedimages["lamp.png"],

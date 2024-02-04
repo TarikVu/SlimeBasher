@@ -1,55 +1,75 @@
+// Represents the game world filled with sprites and the backgrounnd.
+// Images are preloaded in as a promise, and then Sprite classes are
+// Invoked with the image object.  The reason for preloading is to be 
+// able to access the image width and height to dynamically split
+// the Spritesheet class (assumming the sprite sheet is divided evenly.)
 class Game {
     constructor() {
 
-
-
         this.background = new Image()
         this.background.src = './img/field.png'
+        this.sprites = []
 
-        const shop = new Sprite({
-            position: { x: 100, y: 600 },
-            imageSrc: './img/shop.png',
-            scale: 3.5,
-            rows: 1,
-            cols: 6,
-            width:50,
-            height:150
-        })
+        // Dictionary of images ready to be loaded as a Sprite
+        const finishedimages = new Object()
 
-
-        // MAKE METHODS FOR SPLITTING UP SHEET 
-        // AND SETTING DIFFERENT ANIMATION Sections
-        const mc = new Sprite({
-            position: { x: 100, y: 0 },
-            imageSrc: './img/mc-sheet.png',
-            scale: 3.5,
-            rows: 11,
-            cols: 7,
-            // Source image dimensions 
-            srcDims: {width: 350, height: 407},
-            frDims: {width: 50, height: 37}
-        })
+        // List of path's to the sprite sheets
+        const imageUrls = [
+            './img/shop.png',
+            './img/mc-sheet.png'
+        ];
 
         
+        // Used to load images (ref README)
+        const loadImage = src =>
+            new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+                img.src = src;
+            });
 
+        
+        // Loads the Images as a promise and then constructs Sprites
+        Promise.all(imageUrls.map(loadImage)).then(images => {
 
+            // Adds to dictionary
+            // The key of the image file is
+            // the full file name within the "img" folder.
+            images.forEach((image) =>
+                finishedimages[image.src.split('img/').pop()] = image
+            );
 
-        this.sprites = []
-        //this.sprites.push(shop)
-        this.sprites.push(mc)
-        console.log(mc)
-
-       // this.sprites.push(this.background)
+            // Construct the Sprites of the game world. 
+            const shop = new SpriteSheet({
+                image: finishedimages["shop.png"],
+                scale: 3.5,
+                position: { x: 300, y: 300 },
+                ColRow: { cols: 6, rows: 1 },
+            })
+ 
+             const mc = new SpriteSheet({
+                image: finishedimages["mc-sheet.png"],
+                scale: 3.5,
+                position: {x: 300, y: 300},
+                ColRow: { cols: 7, rows: 11 },
+            }) 
+    
+            
+            // Push to list of sprites to be drawn. 
+            this.sprites.push(shop)
+    
+        })
     }
 
 
+    
 
-
-
-
+    // Draws the game world.
+    // BG first, then list of sprites. 
+    // When a SpriteSheet object is updated, update invokes draw w/ ctx
     draw() {
-
-        ctx.drawImage(this.background,0,0,canvas.width,canvas.height)
+        ctx.drawImage(this.background, 0, 0, canvas.width, canvas.height)
         this.sprites.forEach((element) => element.update());
     }
 

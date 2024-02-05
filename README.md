@@ -15,10 +15,10 @@ for an in-depth look at my implementation please check out the [Wiki page here](
 
 
 ## <a name="pfeats"></a> Planned Features
-- []Animation cycles adapt to monitor refresh rate
-- []In browser level editor
-- []Saving local progression data
-- []Upload level designs to MONGODB
+- [ ] Animation cycles adapt to monitor refresh rate
+- [ ] In browser level editor
+- [ ] Saving local progression data
+- [ ] Upload level designs to MONGODB
 
     
 ## <a name="refs"></a> References 

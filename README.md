@@ -1,5 +1,6 @@
 # Deepwood (Pre-Alpha)
 Deepwood is a basic game composed of HTML5, CANVAS, and JavaScript.
+for an in-depth look at my implementation please check out the [Wiki page here](https://github.com/TarikVu/Deepwood/wiki).
 
 ## Table of Contents
 1. [Features](#feats)
@@ -8,25 +9,17 @@ Deepwood is a basic game composed of HTML5, CANVAS, and JavaScript.
 
 ## <a name="feats"></a> Features
 ### secondary headline
-TBD
-
-## <a name="pfeats"></a> PlannedFeatures
-- In browser level editor
-- Saving local progression data
-- Upload level designs to MONGODB
-
-
-## <a name="design"></a> Design
-The Game world is seperated into different scripts to handle View, Modeling, and Controlling the sprites on screen (MVC).
-
 - Custom Spritesheet class
-    - Sheets are preloaded within a promise call in js.  This allows the image to provide the sprites.js file with the correct dimensions.  Otherwise the image width and height would be asynchronously loaded seperately and the sprites class would be unable to crop properly.  This workout prevents having to provide the image dimensions manually during the Spritesheet class construction time. 
-    - The "setAnimation" method takes a string name for an animation as well as the starting and ending rows and collumns of an animation. 
-    
-    - A Spritesheet class will be able to handle varying .png files:
-      -[x] A single static sprite
-      -[x]A sheet with one row of animations for a sprite (defaulted animation)
-      -[]An equilateral sprite sheet.  In this case the user must set the default animation for a sprite by providing the starting row and col for the animation as well as the ending row and col.  
+  - Splits a sprite sheet equalatterally into rows and collums for easy access to frames
+  - Provides ease of use to animate, scale, and update the sprites
+
+
+## <a name="pfeats"></a> Planned Features
+- []Animation cycles adapt to monitor refresh rate
+- []In browser level editor
+- []Saving local progression data
+- []Upload level designs to MONGODB
+
     
 ## <a name="refs"></a> References 
 ### Functionality
@@ -43,3 +36,4 @@ Preloading images as a "promise"
 - [Main Character](https://rvros.itch.io/animated-pixel-hero)
 - [Backgrounds](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
 - [Enviroment Assets](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
+

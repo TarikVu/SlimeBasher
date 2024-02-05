@@ -43,7 +43,7 @@ class SpriteSheet {
     this.startRow = 0
 
     // Frame logic, framesHold affects animation cycling speed
-    this.framesMax = this.cols
+    this.totalFrames = this.cols
     this.framesElapsed = 0
     this.framesHold = framesHold
 
@@ -52,99 +52,81 @@ class SpriteSheet {
 
     // Dictionary Holding the different animations in a sprite sheet
     this.animations = {}
+
+
   }
 
   // For a Sprite sheet with multiple animations
-  // Set an animation with it's starting & ending row/col.
-  // Animatino speed is set to "framesHold" The higher the value, the slower the animation
-  // Example: "start" & "end" must by {start:[0,6], end:[3,7]} object of tuples. [col,row]
-  // The order of animation of cells must be left to right, top to bottom.
-  // This method relies on Zero-Based Indexing.  
-  setAnimation(name, framesHold, start, end) {
+  // Set an animation with it's starting col,row and frames to be animated L->R Top->Bot
+  // Higher framesHold value's correspond to slower animation cycles.
+  setAnimation({name, start, framesHold, totalFrames}) {
 
     // Error Cases when setting animation frames
     if (this.static) {
       throw new Error("Cannot set animation for a static sprite.")
     }
-    if (start.row > end.row) {
-      throw new Error("Starting row of sheet greater than ending row.")
-    }
-    if (start.row == end.row && start.col > end.col) {
-      throw new Error("Starting col greater than ending col of same row.")
-    }
-
-    // Calculate how many frames there are
-    var colCount = start.col
-    var rowCount = start.row
-    var totalCount = 1
-    while (true) {
-      if (colCount == end.col && rowCount == end.row) { break }
-
-      if (colCount == this.cols - 1) {
-        colCount = 0
-        rowCount += 1
-        continue;
-      }
-      else {
-        colCount += 1
-        totalCount += 1
-      }
-    }
 
     // Save the animation in our dictionary
-    var a = { start: start, framesHold: framesHold, framesMax: totalCount }
+    var a = { start: start, framesHold: framesHold, totalFrames: totalFrames}
     this.animations[name] = a
   }
+
+
+  // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+  // Ref: README
+  draw() {
+   
+    //console.log('col ' + this.curCol + ' row ' + this.curRow + " tFrame: " + this.curFrame + " tFrame " + this.totalFrames )
+
+    ctx.drawImage(
+      this.image,
+
+      // Crop src sx,sy  
+      this.curCol * (this.image.width / this.cols),
+      this.curRow * (this.image.height / this.rows),
+
+      // Crop dims of src
+      this.spriteDims.width,
+      this.spriteDims.height,
+
+      // pos destination
+      this.position.x,
+      this.position.y,
+
+      // redraw w/ new dims
+      this.spriteDims.width * this.scale,
+      this.spriteDims.height * this.scale
+    )
+  }
+
 
   // Sets the starting col & row to the saved animation
   // for animateFrames
   playAnimation(name) {
 
-
-    if (this.curAnimation = name) {
-      return
-    }
-
     var a = this.animations[name]
     if (a == undefined) { throw new Error("Animation " + name + " has not been set.") }
 
+/*  console.log("Playing animation " + name)
+    console.log(a) */
+
+    this.curAnimation = name
+
+    // Set the current position
+    this.curCol = a.start.col
+    this.curRow = a.start.row
+
     // For resetting the animation
+    this.curFrame = 0
     this.startCol = a.start.col
     this.startRow = a.start.row
 
     // Sets the position on sheet for animateFrames()
-    this.curCol = a.start.col
-    this.curRow = a.start.row
-    this.framesMax = a.framesMax
+    this.totalFrames = a.totalFrames
     this.framesHold = a.framesHold
-
-    this.curAnimation = name
+    
   }
 
-
-  // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-  // Ref README
-  draw() {
-    ctx.drawImage(
-      this.image,
-
-      // Crop source sx,sy  (Assuming the sheet has equal spacing all around.)
-      this.curCol * (this.image.width / this.cols),
-      this.curRow * (this.image.height / this.rows),
-
-      // sWidth, sHeight
-      this.spriteDims.width,
-      this.spriteDims.height,
-
-      // frame position to be drawn on target canvas
-      this.position.x,
-      this.position.y,
-
-      // width & height of redrawn frame
-      this.spriteDims.width * this.scale,
-      this.spriteDims.height * this.scale
-    )
-  }
 
   // primary animation method.
   // This method will navigate the rows for longer animations
@@ -154,7 +136,7 @@ class SpriteSheet {
 
     if (this.framesElapsed % this.framesHold === 0) {
 
-      if (this.curFrame != this.framesMax - 1) {
+      if (this.curFrame < this.totalFrames-1) {
 
         if (this.curCol == this.cols - 1) {
           this.curRow++
@@ -168,10 +150,17 @@ class SpriteSheet {
 
       } else {
 
+        console.log("resetting to col" + this.startCol + " row " + this.startRow)
+        
+        // reset the animation cycle
         this.curCol = this.startCol
         this.curRow = this.startRow
         this.curFrame = 0
+        
       }
+
+
+
     }
 
   }
@@ -180,12 +169,13 @@ class SpriteSheet {
   // Static sprites do not need to be animated.
   update() {
 
-    this.draw()
-
-    // No need to animate if a static sprite 
     if (!this.static) {
       this.animateFrames()
     }
+    this.draw()
+
+    // No need to animate if a static sprite 
+  
   }
 }
 

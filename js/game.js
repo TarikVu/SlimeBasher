@@ -10,6 +10,7 @@ class Game {
         this.background.src = './img/field.png'
         this.sprites = {}
 
+
         // Dictionary of images ready to be loaded as a Sprite
         const finishedimages = new Object()
 
@@ -55,8 +56,18 @@ class Game {
                 position: { x: 300, y: 300 },
                 ColRow: { cols: 7, rows: 11 },
             })
-            mc.setAnimation("crouch", 15, { col: 4, row: 0 }, { col: 0, row: 1 })
-            mc.setAnimation("idle", 15, { col: 0, row: 0 }, { col: 3, row: 0 })
+
+
+            mc.setAnimation({
+                name: "crouch", totalFrames: 4, framesHold: 25,
+                start: { col: 4, row: 0 }
+            })
+
+            mc.setAnimation({
+                name: "idle", totalFrames: 4, framesHold: 25,
+                start: { col: 0, row: 0 }
+            })
+
             mc.playAnimation("idle")
 
 
@@ -68,9 +79,11 @@ class Game {
 
 
             // Push to list of sprites to be drawn. 
-            //this.sprites["shop"] = shop
+            this.sprites["shop"] = shop
             this.sprites["mc"] = mc
-            //this.sprites["lamp"] = lamp
+            this.sprites["lamp"] = lamp
+
+
 
 
         })
@@ -79,8 +92,10 @@ class Game {
 
     // Updates game world based off of controller
     update(ctrl) {
+
         if (ctrl.s) {
             this.sprites["mc"].playAnimation("crouch")
+            ctrl.s = false
         }
 
 
@@ -94,7 +109,6 @@ class Game {
 
         for (var key in this.sprites) {
             this.sprites[key].update()
-            // console.log( key, dict[key] );
         }
         //this.sprites.forEach((element) => element.update());
     }

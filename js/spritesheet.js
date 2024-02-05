@@ -36,6 +36,7 @@ class SpriteSheet {
     this.curCol = 0
     this.curRow = 0
     this.curFrame = 0
+    this.curAnimation;
 
     // playAnimation sets theses values
     this.startCol = 0
@@ -91,13 +92,18 @@ class SpriteSheet {
     }
 
     // Save the animation in our dictionary
-    var a = { start: start, framesHold: framesHold, frames: totalCount }
+    var a = { start: start, framesHold: framesHold, framesMax: totalCount }
     this.animations[name] = a
   }
 
   // Sets the starting col & row to the saved animation
   // for animateFrames
   playAnimation(name) {
+
+
+    if (this.curAnimation = name) {
+      return
+    }
 
     var a = this.animations[name]
     if (a == undefined) { throw new Error("Animation " + name + " has not been set.") }
@@ -109,8 +115,10 @@ class SpriteSheet {
     // Sets the position on sheet for animateFrames()
     this.curCol = a.start.col
     this.curRow = a.start.row
-    this.framesMax = a.frames
+    this.framesMax = a.framesMax
     this.framesHold = a.framesHold
+
+    this.curAnimation = name
   }
 
 

@@ -8,7 +8,7 @@ class Game {
 
         this.background = new Image()
         this.background.src = './img/field.png'
-        this.sprites = []
+        this.sprites = {}
 
         // Dictionary of images ready to be loaded as a Sprite
         const finishedimages = new Object()
@@ -55,10 +55,10 @@ class Game {
                 position: { x: 300, y: 300 },
                 ColRow: { cols: 7, rows: 11 },
             })
-
-            // col, row
+            mc.setAnimation("crouch", 15, { col: 4, row: 0 }, { col: 0, row: 1 })
             mc.setAnimation("idle", 15, { col: 0, row: 0 }, { col: 3, row: 0 })
             mc.playAnimation("idle")
+
 
             const lamp = new SpriteSheet({
                 image: finishedimages["lamp.png"],
@@ -68,22 +68,35 @@ class Game {
 
 
             // Push to list of sprites to be drawn. 
-            this.sprites.push(shop)
-            this.sprites.push(mc)
-            this.sprites.push(lamp)
+            //this.sprites["shop"] = shop
+            this.sprites["mc"] = mc
+            //this.sprites["lamp"] = lamp
+
 
         })
     }
 
 
+    // Updates game world based off of controller
+    update(ctrl) {
+        if (ctrl.s) {
+            this.sprites["mc"].playAnimation("crouch")
+        }
 
 
+        this.draw()
+    }
     // Draws the game world.
     // BG first, then list of sprites. 
     // When a SpriteSheet object is updated, update invokes draw w/ ctx
     draw() {
         ctx.drawImage(this.background, 0, 0, canvas.width, canvas.height)
-        this.sprites.forEach((element) => element.update());
+
+        for (var key in this.sprites) {
+            this.sprites[key].update()
+            // console.log( key, dict[key] );
+        }
+        //this.sprites.forEach((element) => element.update());
     }
 
 }

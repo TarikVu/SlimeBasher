@@ -9,6 +9,11 @@ canvas.height = 1080
 
 const game = new Game()
 
+// Record user inputs
+const ctrl = {
+    s: false
+}
+
 // For animation purposes
 var stop = false;
 
@@ -18,7 +23,7 @@ animate()
 
 // Main loop to invoke drawing the game.
 function animate() {
-    
+
     if (stop) {
         return;
     }
@@ -26,7 +31,19 @@ function animate() {
     // request another frame
     requestAnimationFrame(animate);
 
-    game.draw()
+
+    // game.update() will envoke draw()
+    game.update(ctrl)
 
 }
 
+
+
+// Record User inputted keys.
+window.addEventListener('keydown', (event) => {
+    console.log(event.key)
+    switch (event.key) {
+        case 's':
+            ctrl.s = true;
+    }
+})

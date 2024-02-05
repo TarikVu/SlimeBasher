@@ -83,9 +83,6 @@ class Game {
             this.sprites["mc"] = mc
             this.sprites["lamp"] = lamp
 
-
-
-
         })
     }
 

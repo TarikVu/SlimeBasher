@@ -158,11 +158,7 @@ class SpriteSheet {
         this.curFrame = 0
         
       }
-
-
-
     }
-
   }
 
   // Draws the sprite.

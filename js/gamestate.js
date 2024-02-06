@@ -33,11 +33,11 @@ class Game {
             });
 
 
-        // Loads the Images as a promise and then constructs Sprites
+        // *runtime*
+        // Promise pre-loads the images 
         Promise.all(imageUrls.map(loadImage)).then(images => {
 
-            // Adds to dict. The key of the image file is
-            // the full file name within the "img" folder.
+            // Adds loaded imgs to dict. key = imgname.png
             images.forEach((image) =>
                 finishedimages[image.src.split('img/').pop()] = image
             );
@@ -51,6 +51,7 @@ class Game {
                 ColRow: { cols: 6, rows: 1 },
             })
 
+            // Main Character
             const mc = new SpriteSheet({
                 image: finishedimages["mc-sheet.png"],
                 scale: 3.5,
@@ -58,13 +59,10 @@ class Game {
                 position: { x: 300, y: 300 },
                 ColRow: { cols: 7, rows: 11 },
             })
-
-
             mc.setAnimation({
                 name: "crouch", totalFrames: 4, framesHold: 15,
                 start: { col: 4, row: 0 }
             })
-
             mc.setAnimation({
                 name: "idle", totalFrames: 4, framesHold: 15,
                 start: { col: 0, row: 0 }
@@ -89,20 +87,16 @@ class Game {
     }
 
 
-
     // Updates game world based off of controller
     update(ctrl) {
     
         // Toggle hzMode for each sprite.
-        // only do so once per change
         if(ctrl.hz60 && this.hzMode != "60hz"){
-            console.log("sssssssss")
             this.hzMode = "60hz"
             for (var key in this.sprites){
                 this.sprites[key].setHz(this.hzMode)
             }
         }
-
         if(ctrl.hz144 && this.hzMode != "144hz"){
             this.hzMode = "144hz"
             for (var key in this.sprites){
@@ -120,22 +114,16 @@ class Game {
         this.draw()
     }
 
-    // Draws the game world.
-    // BG first, then list of sprites. 
-    // When a SpriteSheet object is updated, update invokes draw w/ ctx
+    // Draws the game world
+    // Draw order matters
     draw() {
+
         ctx.drawImage(this.background, 0, 0, canvas.width, canvas.height)
 
         for (var key in this.sprites) {
             this.sprites[key].update()
         }
-        //this.sprites.forEach((element) => element.update());
     }
 
 }
 
-
-
-// use this to calculate the monitor's fps and then set a variable for the sprites to divide by to maintain constant
-// animation cycles speeds across different monitors https://stackoverflow.com/questions/6131051/is-it-possible-to-find-out-what-is-the-monitor-frame-rate-in-javascript
-//https://jsfiddle.net/rBGPk/

@@ -1,8 +1,7 @@
-// SpriteSheet Class refactored to suit entire sprite sheets
+// SpriteSheet Class to suit entire sprite sheets
 // Instead of individual sprites / one row of animations. 
 // A sprite with a single col and row is static.
-// The default animation that will play on a sprite sheet 
-// is the first row on the sheet. 
+// Default animation that plays is the first row on the sheet. 
 class SpriteSheet {
   constructor({
     image,
@@ -38,7 +37,7 @@ class SpriteSheet {
     this.curFrame = 0
     this.curAnimation;
 
-    // playAnimation sets theses values
+    // used for setting up animations in the sheet
     this.startCol = 0
     this.startRow = 0
 
@@ -53,15 +52,11 @@ class SpriteSheet {
 
     // Dictionary Holding the different animations in a sprite sheet
     this.animations = {}
-
-
   }
 
   // Sets the hz scaling factor for different monitors. (144 hz default)
   // This prevents animations from cyling too fast / slow on 60 or 144 hz monitors.
   setHz(hz) {
-
-
     if (hz == "144hz") {
       console.log("in sethz144")
       this.hzScale = 1
@@ -75,9 +70,6 @@ class SpriteSheet {
 
     else { throw new Error("Incorrect Hz input") }
   }
-
-
-
 
   // For a Sprite sheet with multiple animations
   // Set an animation with it's starting col,row and frames to be animated L->R Top->Bot
@@ -98,9 +90,6 @@ class SpriteSheet {
   // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
   // Ref: README
   draw() {
-
-    //console.log('col ' + this.curCol + ' row ' + this.curRow + " tFrame: " + this.curFrame + " tFrame " + this.totalFrames )
-
     ctx.drawImage(
       this.image,
 
@@ -152,15 +141,13 @@ class SpriteSheet {
 
 
   // primary animation method.
-  // This method will navigate the rows for longer animations
+  // This method will increment the rows for longer animations
   // and reset the animation row/col on the sheet when max frames elapses.
   animateFrames() {
+
     this.framesElapsed++
-
     if (this.framesElapsed % (this.framesHold * this.hzScale) === 0) {
-
       if (this.curFrame < this.totalFrames - 1) {
-
         if (this.curCol == this.cols - 1) {
           this.curRow++
           this.curCol = 0
@@ -168,7 +155,6 @@ class SpriteSheet {
         else {
           this.curCol++
         }
-
         this.curFrame += 1
 
       } else {
@@ -191,10 +177,8 @@ class SpriteSheet {
     if (!this.static) {
       this.animateFrames()
     }
+
     this.draw()
-
-    // No need to animate if a static sprite 
-
   }
 }
 

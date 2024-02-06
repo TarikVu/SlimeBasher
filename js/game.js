@@ -64,8 +64,8 @@ class Game {
             })
 
             mc.setAnimation({
-                name: "idle", totalFrames: 6, framesHold: 10,
-                start: { col: 4, row: 7 }
+                name: "idle", totalFrames: 4, framesHold: 18,
+                start: { col: 0, row: 0 }
             })
 
             mc.playAnimation("idle")
@@ -97,7 +97,7 @@ class Game {
 
         this.draw()
     }
-    
+
     // Draws the game world.
     // BG first, then list of sprites. 
     // When a SpriteSheet object is updated, update invokes draw w/ ctx

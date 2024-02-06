@@ -11,9 +11,18 @@ const game = new Game()
 const pauseMenu = new PauseMenu()
 
 
-// Records user inputs
+
+// Records user inputs and game settings modified in the pause screen.
+// Animation speeds are defaulted to a 144hz monitor. 
 const ctrl = {
+    
+    // Game Settings
     pause: false,
+    hz60: false,
+    hz144: true,
+
+    // Mouse and movement
+    mouse: { x: 0, y: 0, down: false, up: false },
     s: false
 }
 
@@ -35,23 +44,45 @@ function animate() {
     requestAnimationFrame(animate);
 
 
-    if (ctrl.pause) { 
-        
-        pauseMenu.update()
+    if (ctrl.pause) {
+        console.log("60hz: " + ctrl.hz60 +" 144hz: " + ctrl.hz144)
+    
+        pauseMenu.update(ctrl)
         return // Skip updating world on pause
     }
 
-    game.update(ctrl) 
-
+    game.update(ctrl)
 
 }
 
+// Record player mouse   
+function getMousePosition(canvas, event) {
+    let rect = canvas.getBoundingClientRect();
+    let x = event.clientX - rect.left;
+    let y = event.clientY - rect.top;
+    ctrl.mouse.x = x
+    ctrl.mouse.y = y
+}
+
+canvas.addEventListener("mousemove", function (e) {
+    getMousePosition(canvas, e);
+});
+
+canvas.addEventListener("mousedown", function (e) {
+    ctrl.mouse.down = true
+    ctrl.mouse.up = false
+});
+canvas.addEventListener("mouseup", function (e) {
+    ctrl.mouse.down = false
+    ctrl.mouse.up = true
+});
 
 
-// Record User inputted keys. ------------
+// Record User inputted keyboard keys
 window.addEventListener('keydown', (event) => {
     console.log(event.key)
     switch (event.key) {
+
         // Pause
         case 'Escape':
             if (ctrl.pause)
@@ -60,10 +91,13 @@ window.addEventListener('keydown', (event) => {
                 ctrl.pause = true
             break
 
+        // Movement 
         case 's':
             ctrl.s = true
             break
     }
 })
+
+
 
 

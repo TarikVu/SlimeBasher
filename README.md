@@ -36,4 +36,5 @@ Preloading images as a "promise"
 - [Main Character](https://rvros.itch.io/animated-pixel-hero)
 - [Backgrounds](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
 - [Enviroment Assets](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
+- [Pause Menu](https://srtoasty.itch.io/ui-assets-pack-2)
 

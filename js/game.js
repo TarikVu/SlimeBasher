@@ -59,13 +59,13 @@ class Game {
 
 
             mc.setAnimation({
-                name: "crouch", totalFrames: 4, framesHold: 25,
+                name: "crouch", totalFrames: 4, framesHold: 15,
                 start: { col: 4, row: 0 }
             })
 
             mc.setAnimation({
-                name: "idle", totalFrames: 4, framesHold: 25,
-                start: { col: 0, row: 0 }
+                name: "idle", totalFrames: 6, framesHold: 10,
+                start: { col: 4, row: 7 }
             })
 
             mc.playAnimation("idle")
@@ -89,15 +89,15 @@ class Game {
 
     // Updates game world based off of controller
     update(ctrl) {
-
+    
         if (ctrl.s) {
             this.sprites["mc"].playAnimation("crouch")
             ctrl.s = false
         }
 
-
         this.draw()
     }
+    
     // Draws the game world.
     // BG first, then list of sprites. 
     // When a SpriteSheet object is updated, update invokes draw w/ ctx
@@ -112,3 +112,8 @@ class Game {
 
 }
 
+
+
+// use this to calculate the monitor's fps and then set a variable for the sprites to divide by to maintain constant
+// animation cycles speeds across different monitors https://stackoverflow.com/questions/6131051/is-it-possible-to-find-out-what-is-the-monitor-frame-rate-in-javascript
+//https://jsfiddle.net/rBGPk/

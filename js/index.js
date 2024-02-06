@@ -4,13 +4,16 @@ const canvas = document.getElementById("gamescreen")
 const ctx = canvas.getContext('2d');
 
 // Set up game screen
-canvas.width = 1920
-canvas.height = 1080
+canvas.width = 1440
+canvas.height = 900
 
 const game = new Game()
+const pauseMenu = new PauseMenu()
 
-// Record user inputs
+
+// Records user inputs
 const ctrl = {
+    pause: false,
     s: false
 }
 
@@ -32,18 +35,35 @@ function animate() {
     requestAnimationFrame(animate);
 
 
-    // game.update() will envoke draw()
-    game.update(ctrl)
+    if (ctrl.pause) { 
+        
+        pauseMenu.update()
+        return // Skip updating world on pause
+    }
+
+    game.update(ctrl) 
+
 
 }
 
 
 
-// Record User inputted keys.
+// Record User inputted keys. ------------
 window.addEventListener('keydown', (event) => {
     console.log(event.key)
     switch (event.key) {
+        // Pause
+        case 'Escape':
+            if (ctrl.pause)
+                ctrl.pause = false
+            else
+                ctrl.pause = true
+            break
+
         case 's':
-            ctrl.s = true;
+            ctrl.s = true
+            break
     }
 })
+
+

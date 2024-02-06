@@ -7,7 +7,8 @@ class SpriteSheet {
   constructor({
     image,
     scale = 1,
-    framesHold = 7,
+    hzScaling = 1,
+    framesHold = 7 * hzScaling,
     position,
     ColRow = { cols: 1, rows: 1 },
   }) {
@@ -56,10 +57,18 @@ class SpriteSheet {
 
   }
 
+  // Sets the hz scaling factor for different monitors. (144 hz default)
+  // This prevents animations from cyling too fast / slow on 60 or 144 hz monitors.
+  setHz(hz) {
+    if (hz = "144") { this.hzScaling = 1 }
+    else if (hz = "60") { this.hzScaling = 2.4 }
+    else { throw new Error("Incorrect Hz input") }
+  }
+
   // For a Sprite sheet with multiple animations
   // Set an animation with it's starting col,row and frames to be animated L->R Top->Bot
   // Higher framesHold value's correspond to slower animation cycles.
-  setAnimation({name, start, framesHold, totalFrames}) {
+  setAnimation({ name, start, framesHold, totalFrames }) {
 
     // Error Cases when setting animation frames
     if (this.static) {
@@ -67,7 +76,7 @@ class SpriteSheet {
     }
 
     // Save the animation in our dictionary
-    var a = { start: start, framesHold: framesHold, totalFrames: totalFrames}
+    var a = { start: start, framesHold: framesHold, totalFrames: totalFrames }
     this.animations[name] = a
   }
 
@@ -75,7 +84,7 @@ class SpriteSheet {
   // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
   // Ref: README
   draw() {
-   
+
     //console.log('col ' + this.curCol + ' row ' + this.curRow + " tFrame: " + this.curFrame + " tFrame " + this.totalFrames )
 
     ctx.drawImage(
@@ -107,8 +116,8 @@ class SpriteSheet {
     var a = this.animations[name]
     if (a == undefined) { throw new Error("Animation " + name + " has not been set.") }
 
-/*  console.log("Playing animation " + name)
-    console.log(a) */
+    /*  console.log("Playing animation " + name)
+        console.log(a) */
 
     this.curAnimation = name
 
@@ -124,7 +133,7 @@ class SpriteSheet {
     // Sets the position on sheet for animateFrames()
     this.totalFrames = a.totalFrames
     this.framesHold = a.framesHold
-    
+
   }
 
 
@@ -136,7 +145,7 @@ class SpriteSheet {
 
     if (this.framesElapsed % this.framesHold === 0) {
 
-      if (this.curFrame < this.totalFrames-1) {
+      if (this.curFrame < this.totalFrames - 1) {
 
         if (this.curCol == this.cols - 1) {
           this.curRow++
@@ -150,13 +159,13 @@ class SpriteSheet {
 
       } else {
 
-        console.log("resetting to col" + this.startCol + " row " + this.startRow)
-        
+        //console.log("resetting to col" + this.startCol + " row " + this.startRow)
+
         // reset the animation cycle
         this.curCol = this.startCol
         this.curRow = this.startRow
         this.curFrame = 0
-        
+
       }
     }
   }
@@ -171,7 +180,7 @@ class SpriteSheet {
     this.draw()
 
     // No need to animate if a static sprite 
-  
+
   }
 }
 

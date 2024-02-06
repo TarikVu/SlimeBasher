@@ -9,6 +9,7 @@ class Game {
         this.background = new Image()
         this.background.src = './img/field.png'
         this.sprites = {}
+        this.hzMode = "144hz"
 
 
         // Dictionary of images ready to be loaded as a Sprite
@@ -53,6 +54,7 @@ class Game {
             const mc = new SpriteSheet({
                 image: finishedimages["mc-sheet.png"],
                 scale: 3.5,
+                hzMode: this.hzMode,
                 position: { x: 300, y: 300 },
                 ColRow: { cols: 7, rows: 11 },
             })
@@ -64,7 +66,7 @@ class Game {
             })
 
             mc.setAnimation({
-                name: "idle", totalFrames: 4, framesHold: 18,
+                name: "idle", totalFrames: 72, framesHold: 14,
                 start: { col: 0, row: 0 }
             })
 
@@ -87,9 +89,30 @@ class Game {
     }
 
 
+
     // Updates game world based off of controller
     update(ctrl) {
     
+
+        // Toggle hzMode for each sprite.
+        // only do so once per change
+        if(ctrl.hz60 && this.hzMode != "60hz"){
+            console.log("sssssssss")
+            this.hzMode = "60hz"
+            for (var key in this.sprites){
+                this.sprites[key].setHz(this.hzMode)
+            }
+        }
+
+        if(ctrl.hz144 && this.hzMode != "144hz"){
+            this.hzMode = "144hz"
+            for (var key in this.sprites){
+                this.sprites[key].setHz(this.hzMode)
+            }
+        }
+        
+
+        // Controls    
         if (ctrl.s) {
             this.sprites["mc"].playAnimation("crouch")
             ctrl.s = false

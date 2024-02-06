@@ -7,8 +7,7 @@ class SpriteSheet {
   constructor({
     image,
     scale = 1,
-    hzScaling = 1,
-    framesHold = 7 * hzScaling,
+    framesHold = 7,
     position,
     ColRow = { cols: 1, rows: 1 },
   }) {
@@ -47,6 +46,7 @@ class SpriteSheet {
     this.totalFrames = this.cols
     this.framesElapsed = 0
     this.framesHold = framesHold
+    this.hzScale = 1
 
     // Logic for Single row Sheet
     this.singleAnimation = (!this.static && this.cols > 1 && this.rows == 1)
@@ -60,10 +60,24 @@ class SpriteSheet {
   // Sets the hz scaling factor for different monitors. (144 hz default)
   // This prevents animations from cyling too fast / slow on 60 or 144 hz monitors.
   setHz(hz) {
-    if (hz = "144") { this.hzScaling = 1 }
-    else if (hz = "60") { this.hzScaling = 2.4 }
+
+
+    if (hz == "144hz") {
+      console.log("in sethz144")
+      this.hzScale = 1
+    }
+
+
+    else if (hz == "60hz") {
+      console.log("in sethz60")
+      this.hzScale = 1.5
+    }
+
     else { throw new Error("Incorrect Hz input") }
   }
+
+
+
 
   // For a Sprite sheet with multiple animations
   // Set an animation with it's starting col,row and frames to be animated L->R Top->Bot
@@ -143,7 +157,7 @@ class SpriteSheet {
   animateFrames() {
     this.framesElapsed++
 
-    if (this.framesElapsed % this.framesHold === 0) {
+    if (this.framesElapsed % (this.framesHold * this.hzScale) === 0) {
 
       if (this.curFrame < this.totalFrames - 1) {
 

@@ -66,7 +66,7 @@ class Game {
             })
 
             mc.setAnimation({
-                name: "idle", totalFrames: 72, framesHold: 14,
+                name: "idle", totalFrames: 4, framesHold: 14,
                 start: { col: 0, row: 0 }
             })
 

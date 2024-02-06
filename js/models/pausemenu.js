@@ -330,6 +330,11 @@ class PauseMenu {
         ctx.textAlign = "center";
         ctx.fillText("PAUSED", canvas.width / 2, this.position.y + 145);
 
+        ctx.font = "16px cursive";
+        ctx.fillStyle = "black"
+        ctx.textAlign = "center";
+        ctx.fillText("*Select your monitor refresh rate*", canvas.width / 2, this.position.y + 370);
+
 
         // Draw each item in the panel
         for (var key in this.items) {

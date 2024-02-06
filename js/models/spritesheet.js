@@ -70,7 +70,7 @@ class SpriteSheet {
 
     else if (hz == "60hz") {
       console.log("in sethz60")
-      this.hzScale = 1.5
+      this.hzScale = .5
     }
 
     else { throw new Error("Incorrect Hz input") }

@@ -5,14 +5,17 @@ for an in-depth look at my implementation please check out the [Wiki page here](
 ## Table of Contents
 1. [Features](#feats)
 1. [Design](#design)
+1. [Planned Feature](#pfeats)
 1. [References](#refs)
 
 ## <a name="feats"></a> Features
-### secondary headline
 - Custom Spritesheet class
   - Splits a sprite sheet equalatterally into rows and collums for easy access to frames
   - Provides ease of use to animate, scale, and update the sprites
 
+
+## <a name="design"></a> Design
+![diagram](https://cdn.discordapp.com/attachments/1204513288214413352/1204513303695458435/deepwood.PNG?ex=65d5016e&is=65c28c6e&hm=f685046994b119c3fcd3e8721f9da9345e6a1b0b1cf4dad3ec1606a95f07241d&)
 
 ## <a name="pfeats"></a> Planned Features
 - [ ] Animation cycles adapt to monitor refresh rate

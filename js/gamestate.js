@@ -46,7 +46,7 @@ class Game {
             const shop = new SpriteSheet({
                 image: finishedimages["shop.png"],
                 scale: 3.5,
-                framesHold: 8,
+                framesHold: 14,
                 position: { x: 300, y: 300 },
                 ColRow: { cols: 6, rows: 1 },
             })
@@ -66,7 +66,7 @@ class Game {
             })
 
             mc.setAnimation({
-                name: "idle", totalFrames: 4, framesHold: 14,
+                name: "idle", totalFrames: 4, framesHold: 15,
                 start: { col: 0, row: 0 }
             })
 
@@ -93,7 +93,6 @@ class Game {
     // Updates game world based off of controller
     update(ctrl) {
     
-
         // Toggle hzMode for each sprite.
         // only do so once per change
         if(ctrl.hz60 && this.hzMode != "60hz"){

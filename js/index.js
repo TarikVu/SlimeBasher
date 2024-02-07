@@ -15,7 +15,7 @@ const pauseMenu = new PauseMenu()
 // Records user inputs and game settings modified in the pause screen.
 // Animation speeds are defaulted to a 144hz monitor. 
 const ctrl = {
-    
+
     // Game Settings
     pause: false,
     hz60: false,
@@ -23,7 +23,9 @@ const ctrl = {
 
     // Mouse and movement
     mouse: { x: 0, y: 0, down: false, up: false },
-    s: false
+    s: false,
+    d: false,
+    space: false
 }
 
 // For animation purposes
@@ -45,8 +47,8 @@ function animate() {
 
 
     if (ctrl.pause) {
-        console.log("60hz: " + ctrl.hz60 +" 144hz: " + ctrl.hz144)
-    
+        console.log("60hz: " + ctrl.hz60 + " 144hz: " + ctrl.hz144)
+
         pauseMenu.update(ctrl)
         return // Skip updating world on pause
     }
@@ -81,6 +83,12 @@ canvas.addEventListener("mouseup", function (e) {
 // Record User inputted keyboard keys
 window.addEventListener('keydown', (event) => {
     console.log(event.key)
+
+    // stops window from scrolling w/ space
+    if (event.key == " " && event.target == document.body) {
+        event.preventDefault();
+    }
+
     switch (event.key) {
 
         // Pause
@@ -94,6 +102,32 @@ window.addEventListener('keydown', (event) => {
         // Movement 
         case 's':
             ctrl.s = true
+            break
+        case 'd':
+            ctrl.d = true
+            break
+
+        case ' ':
+            ctrl.space = true
+            break
+
+    }
+})
+
+// Record User inputted keyboard keys
+window.addEventListener('keyup', (event) => {
+    console.log(event.key)
+    switch (event.key) {
+        // Movement 
+        case 's':
+            ctrl.s = false
+            break
+        case 'd':
+            ctrl.d = false
+            break
+
+        case ' ':
+            ctrl.space = false
             break
     }
 })

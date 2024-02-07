@@ -17,10 +17,11 @@ class Game {
 
         // List of path's to the sprite sheets
         const imageUrls = [
+            //'./img/mc-sheet.png',
             './img/shop.png',
-            './img/mc-sheet.png',
-            './img/lamp.png'
-        ];
+            './img/lamp.png',
+            './img/knight/_Idle.png'
+        ]
 
 
         // Used to load images (ref README)
@@ -34,7 +35,7 @@ class Game {
 
 
         // *runtime*
-        // Promise pre-loads the images 
+        // a Promise pre-loads the images 
         Promise.all(imageUrls.map(loadImage)).then(images => {
 
             // Adds loaded imgs to dict. key = imgname.png
@@ -51,24 +52,48 @@ class Game {
                 ColRow: { cols: 6, rows: 1 },
             })
 
-            // Main Character
-            const mc = new SpriteSheet({
-                image: finishedimages["mc-sheet.png"],
-                scale: 3.5,
+            // // Main Character
+            // const mc = new Character({
+            //     image: finishedimages["mc-sheet.png"],
+            //     scale: 3.5,
+            //     hzMode: this.hzMode,
+            //     position: { x: 300, y: 300 },
+            //     ColRow: { cols: 7, rows: 11 },
+            // })
+
+            // mc.addAnimation({
+            //     name: "jump", totalFrames: 9, framesHold: 15,
+            //     start: { col: 0, row: 2 },
+            //     overflow: 2
+            // })
+
+            // mc.addAnimation({
+            //     name: "run", totalFrames: 6, framesHold: 16,
+            //     start: { col: 1, row: 1 }
+            // })
+
+            // mc.addAnimation({
+            //     name: "crouch", totalFrames: 4, framesHold: 15,
+            //     start: { col: 4, row: 0 }
+            // })
+            // mc.addAnimation({
+            //     name: "idle", totalFrames: 4, framesHold: 15,
+            //     start: { col: 0, row: 0 }
+            // })
+
+            const mc = new mainCharacter({
+                image: finishedimages["knight/_Idle.png"],
+                scale: 4,
                 hzMode: this.hzMode,
                 position: { x: 300, y: 300 },
-                ColRow: { cols: 7, rows: 11 },
-            })
-            mc.setAnimation({
-                name: "crouch", totalFrames: 4, framesHold: 15,
-                start: { col: 4, row: 0 }
-            })
-            mc.setAnimation({
-                name: "idle", totalFrames: 4, framesHold: 15,
-                start: { col: 0, row: 0 }
+                ColRow: { cols: 12, rows: 11 },
             })
 
-            mc.playAnimation("idle")
+             /* mc.addAnimation({
+                 name: "all", totalFrames: 127, framesHold: 5,
+                 start: { col: 0, row: 2 },
+             })
+            mc.setAnimation("all") */
 
 
             const lamp = new SpriteSheet({
@@ -79,9 +104,11 @@ class Game {
 
 
             // Push to list of sprites to be drawn. 
-            this.sprites["shop"] = shop
+            //this.sprites["shop"] = shop
             this.sprites["mc"] = mc
-            this.sprites["lamp"] = lamp
+            //this.sprites["lamp"] = lamp
+
+
 
         })
     }
@@ -89,27 +116,50 @@ class Game {
 
     // Updates game world based off of controller
     update(ctrl) {
-    
-        // Toggle hzMode for each sprite.
-        if(ctrl.hz60 && this.hzMode != "60hz"){
-            this.hzMode = "60hz"
-            for (var key in this.sprites){
-                this.sprites[key].setHz(this.hzMode)
-            }
-        }
-        if(ctrl.hz144 && this.hzMode != "144hz"){
-            this.hzMode = "144hz"
-            for (var key in this.sprites){
-                this.sprites[key].setHz(this.hzMode)
-            }
-        }
-        
 
-        // Controls    
-        if (ctrl.s) {
-            this.sprites["mc"].playAnimation("crouch")
-            ctrl.s = false
+        // Toggle hzMode for each sprite.
+        if (ctrl.hz60 && this.hzMode != "60hz") {
+            this.hzMode = "60hz"
+            for (var key in this.sprites) {
+                this.sprites[key].setHz(this.hzMode)
+            }
+            return
         }
+        if (ctrl.hz144 && this.hzMode != "144hz") {
+            this.hzMode = "144hz"
+            for (var key in this.sprites) {
+                this.sprites[key].setHz(this.hzMode)
+            }
+            return
+        }
+
+
+        var mc = this.sprites["mc"]
+
+        // Controls
+        // try catch for case for when animations were still being loaded
+        // durig runtime init    
+        try {
+            if (!mc.isBusy()) {
+                if (!ctrl.s && !ctrl.d && !ctrl.space) {
+                    mc.setAnimation("idle")
+                }
+                if (ctrl.s) {
+                    mc.setAnimation("crouch")
+                }
+                if (ctrl.d) {
+                    mc.setAnimation("run")
+                }
+                if (ctrl.space) {
+                    mc.setAnimation("jump")
+                }
+            }
+        }
+        catch {
+
+        }
+
+
 
         this.draw()
     }

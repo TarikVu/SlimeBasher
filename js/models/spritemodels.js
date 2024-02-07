@@ -7,7 +7,8 @@ class SpriteSheet {
     image,
     scale = 1,
     framesHold = 7,
-    position,
+    position = { x: 0, y: 0 },
+    spriteDims = { width: 1, height: 1 },
     ColRow = { cols: 1, rows: 1 },
   }) {
 
@@ -20,23 +21,48 @@ class SpriteSheet {
     this.image = image
     this.scale = scale
     this.position = position
-    this.cols = ColRow.cols
-    this.rows = ColRow.rows
+    this.spriteDims = spriteDims
+    this.ColRow = ColRow
+
+
+    // Logic to split up the rows and collumns evenly depending on 
+    // either being provided the sprite dimensions or the rows and collumns
+    var dimsProvided = spriteDims.width != 1 || spriteDims.height != 1
+    var colRowProvided = ColRow.cols != 1 || ColRow.rows != 1
+
+    if (dimsProvided) {
+      this.cols = this.image.width / spriteDims.width
+      this.rows = this.image.height / spriteDims.height
+      this.spriteDims.width = spriteDims.width
+      this.spriteDims.height = spriteDims.height
+
+    }
+    else if (colRowProvided) {
+      this.spriteDims.width = this.image.width / this.ColRow.cols
+      this.spriteDims.height = this.image.height / this.ColRow.rows
+      this.cols = (this.image.width / this.spriteDims.width)
+      this.rows = (this.image.height / this.spriteDims.height)
+    }
+    // if neither the dimensions or col and row count were specifed
+    // the spritedimensions are defaulted to the whole sheet, and the total
+    // cols and rows are set to {1,1}
+    else {
+      this.spriteDims = { width: this.image.width, height: this.image.height }
+      this.cols = ColRow.cols
+      this.rows = ColRow.rows
+    }
 
     // Static Sprite
     this.static = (this.cols == 1 && this.rows == 1)
 
     // Sets the sprite's dimensions relative to the rows and col
-    this.spriteDims = { width: 0, height: 0 }
-    this.spriteDims.width = this.image.width / this.cols
-    this.spriteDims.height = this.image.height / this.rows
+
 
     // Used to keep track of where we are on the SpriteSheet
     this.curCol = 0
     this.curRow = 0
     this.curFrame = 0
     this.curAnimation
-
 
     // used for setting up animations in the sheet
     this.startCol = 0
@@ -59,13 +85,9 @@ class SpriteSheet {
   // This prevents animations from cyling too fast / slow on 60 or 144 hz monitors.
   setHz(hz) {
     if (hz == "144hz") {
-      console.log("in sethz144")
       this.hzScale = 1
     }
-
-
     else if (hz == "60hz") {
-      console.log("in sethz60")
       this.hzScale = .5
     }
 
@@ -75,9 +97,8 @@ class SpriteSheet {
   // For a Sprite sheet with multiple animations
   // Set an animation with it's starting col,row and frames to be animated L->R Top->Bot
   // Higher framesHold value's correspond to slower animation cycles.
-  addAnimation({ name, start, framesHold, totalFrames}) {
+  addAnimation({ name, start, framesHold, totalFrames }) {
 
-  
     // Error Cases when setting animation frames
     if (this.static) {
       throw new Error("Cannot set animation for a static sprite.")
@@ -91,7 +112,7 @@ class SpriteSheet {
     }
 
     this.animations[name] = a
-    console.log(a)
+
   }
 
   // Sets the starting col & row to the saved animation
@@ -119,8 +140,6 @@ class SpriteSheet {
 
 
   }
-
-
 
   // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
   // Ref: README
@@ -153,32 +172,31 @@ class SpriteSheet {
   animateFrames() {
     this.framesElapsed++
 
-
     if (this.framesElapsed % (this.framesHold * this.hzScale) === 0) {
 
-
-        if (this.curFrame < this.totalFrames - 1) {
-          if (this.curCol == this.cols - 1) {
-            this.curRow++
-            this.curCol = 0
-          }
-          else {
-            this.curCol++
-            
-          this.curFrame += 1
-
-        } else {
+      if (this.curFrame < this.totalFrames - 1) {
 
 
-          // reset the animation cycle
-          this.curCol = this.startCol
-          this.curRow = this.startRow
-          this.curFrame = 0
+        if (this.curCol == this.cols - 1) {
+          this.curRow++
+          this.curCol = 0
+        }
+        else {
+          this.curCol++
+        }
 
-          
-        
+        this.curFrame += 1
+
+      } else {
+
+        //console.log("resetting to col" + this.startCol + " row " + this.startRow)
+
+        // reset the animation cycle
+        this.curCol = this.startCol
+        this.curRow = this.startRow
+        this.curFrame = 0
+
       }
-
     }
   }
 
@@ -187,6 +205,7 @@ class SpriteSheet {
   update() {
 
     if (!this.static) {
+
       this.animateFrames()
     }
 
@@ -197,44 +216,102 @@ class SpriteSheet {
 
 // Character sprites like our MC 
 // will have movement, hitboxes and more complex animations.
-class mainCharacter extends SpriteSheet {
+class MainCharacter {
   constructor({
-    image,
+    spriteDims,
     scale = 1,
     framesHold = 7,
     position,
-    ColRow = { cols: 1, rows: 1 },
     velocity = 1
   }) {
-    super({
-      image,
-      scale,
-      framesHold,
-      position,
-      ColRow
-    })
+
+    this.spriteDims = spriteDims
+    this.scale = scale
+    this.framesHold = framesHold
+    this.position = position
     this.velocity = velocity
-    this.sprites ={}
+    this.allAnimations = {}
+    this.curAnimation
   }
 
 
   // reports whether or not the animation is busy and can be canceled
   isBusy() {
 
-    var animation = this.animations[this.curAnimation]
-    if (this.curAnimation == "jump") {
+    return false;
 
-      if (this.curFrame == animation.totalFrames - 1) {
-        this.setAnimation("idle")
-        return false
-      }
 
-      return true
+  }
+
+  setHz(hz) {
+    for (var key in this.allAnimations) {
+      this.allAnimations[key].setHz(hz)
     }
-    return false
+  }
+
+  setAnimation(a) {
+    this.curAnimation = a
+
+  }
+
+  // Takes a dictionary of loaded images
+  // and creates the spritesheet animations for MC
+  addAnimations(loadedImages) {
+    let animations = {}
+
+
+    for (var key in loadedImages) {
+      switch (key) {
+
+        case '_Idle.png':
+          animations[key] = new SpriteSheet({
+            image: loadedImages[key],
+            framesHold: 15,
+            scale: this.scale,
+            ColRow: { cols: 10, rows: 1 }
+          })
+          break
+
+        case '_Run.png':
+          animations[key] = new SpriteSheet({
+            image: loadedImages[key],
+            framesHold: 5,
+            scale: this.scale,
+            ColRow: { cols: 10, rows: 1 }
+          })
+          break
+
+          case '_CrouchAll.png':
+          animations[key] = new SpriteSheet({
+            image: loadedImages[key],
+            framesHold: 15,
+            scale: this.scale,
+            ColRow: { cols: 3, rows: 1 }
+          })
+          break
+      }
+    }
+
+    this.allAnimations = animations
+
+
+
+
+
+    this.curAnimation = "_Idle.png"
+  }
+
+  update() {
+    // Handle animation velocity physics stuffs
+
+    this.draw()
+
   }
 
 
+  draw() {
+    this.allAnimations[this.curAnimation].update()
+  }
 }
 
 

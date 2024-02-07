@@ -53,7 +53,8 @@ function animate() {
         return // Skip updating world on pause
     }
 
-    game.update(ctrl)
+    if (game.loaded){
+    game.update(ctrl)}
 
 }
 

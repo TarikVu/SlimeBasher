@@ -8,23 +8,35 @@ class Game {
 
         this.background = new Image()
         this.background.src = './img/field.png'
-        this.sprites = {}
+        this.stage = {}
+
         this.hzMode = "144hz"
+        this.loaded = false
 
+        // Construct Main character
+        this.mc = new MainCharacter({
+            spriteDims: { width: 38, height: 20 },
+            scale: 3,
+            position: { x: 300, y: 300 },
 
-        // Dictionary of images ready to be loaded as a Sprite
-        const finishedimages = new Object()
+        })
 
-        // List of path's to the sprite sheets
-        const imageUrls = [
+        // Paths to images to be loaded in
+        const stageImages = [
             //'./img/mc-sheet.png',
             './img/shop.png',
             './img/lamp.png',
-            './img/knight/_Idle.png'
+        ]
+
+        const mcImages = [
+            './img/mc/_Idle.png',
+            './img/mc/_Run.png',
+            './img/mc/_CrouchAll.png'
         ]
 
 
-        // Used to load images (ref README)
+        // *runtime* Used to load images (ref README)
+        // Pre load and construct the sprites using promises
         const loadImage = src =>
             new Promise((resolve, reject) => {
                 const img = new Image();
@@ -34,83 +46,50 @@ class Game {
             });
 
 
-        // *runtime*
-        // a Promise pre-loads the images 
-        Promise.all(imageUrls.map(loadImage)).then(images => {
+        // Pre-load stage Images
+        Promise.all(stageImages.map(loadImage)).then(images => {
+            var loadedImages = new Object()
 
             // Adds loaded imgs to dict. key = imgname.png
             images.forEach((image) =>
-                finishedimages[image.src.split('img/').pop()] = image
+                loadedImages[image.src.split('img/').pop()] = image
             );
 
             // Construct the Sprites of the game world. 
             const shop = new SpriteSheet({
-                image: finishedimages["shop.png"],
+                image: loadedImages["shop.png"],
                 scale: 3.5,
                 framesHold: 14,
                 position: { x: 300, y: 300 },
-                ColRow: { cols: 6, rows: 1 },
+                spriteDims: { width: 118, height: 128 },
+                //ColRow: { cols: 6, rows: 1 },
             })
-
-            // // Main Character
-            // const mc = new Character({
-            //     image: finishedimages["mc-sheet.png"],
-            //     scale: 3.5,
-            //     hzMode: this.hzMode,
-            //     position: { x: 300, y: 300 },
-            //     ColRow: { cols: 7, rows: 11 },
-            // })
-
-            // mc.addAnimation({
-            //     name: "jump", totalFrames: 9, framesHold: 15,
-            //     start: { col: 0, row: 2 },
-            //     overflow: 2
-            // })
-
-            // mc.addAnimation({
-            //     name: "run", totalFrames: 6, framesHold: 16,
-            //     start: { col: 1, row: 1 }
-            // })
-
-            // mc.addAnimation({
-            //     name: "crouch", totalFrames: 4, framesHold: 15,
-            //     start: { col: 4, row: 0 }
-            // })
-            // mc.addAnimation({
-            //     name: "idle", totalFrames: 4, framesHold: 15,
-            //     start: { col: 0, row: 0 }
-            // })
-
-            const mc = new mainCharacter({
-                image: finishedimages["knight/_Idle.png"],
-                scale: 4,
-                hzMode: this.hzMode,
-                position: { x: 300, y: 300 },
-                ColRow: { cols: 12, rows: 11 },
-            })
-
-             /* mc.addAnimation({
-                 name: "all", totalFrames: 127, framesHold: 5,
-                 start: { col: 0, row: 2 },
-             })
-            mc.setAnimation("all") */
-
 
             const lamp = new SpriteSheet({
-                image: finishedimages["lamp.png"],
+                image: loadedImages["lamp.png"],
                 scale: 2.5,
                 position: { x: 300, y: 300 }
             })
 
-
             // Push to list of sprites to be drawn. 
-            //this.sprites["shop"] = shop
-            this.sprites["mc"] = mc
-            //this.sprites["lamp"] = lamp
+            this.stage["shop"] = shop
+            this.stage["lamp"] = lamp
+        })
 
 
+        // Pre-load Main character sprite Images (animations)
+        Promise.all(mcImages.map(loadImage)).then(images => {
+            var loadedImages = new Object()
+            images.forEach((image) =>
+                loadedImages[image.src.split('img/mc/').pop()] = image
+            );
+
+            this.mc.addAnimations(loadedImages)
+            this.loaded = true;
 
         })
+
+
     }
 
 
@@ -121,37 +100,41 @@ class Game {
         if (ctrl.hz60 && this.hzMode != "60hz") {
             this.hzMode = "60hz"
             for (var key in this.sprites) {
-                this.sprites[key].setHz(this.hzMode)
+                this.stage[key].setHz(this.hzMode)
             }
+            this.mc.setHz("60hz")
             return
         }
         if (ctrl.hz144 && this.hzMode != "144hz") {
             this.hzMode = "144hz"
+
             for (var key in this.sprites) {
-                this.sprites[key].setHz(this.hzMode)
+                this.stage[key].setHz(this.hzMode)
             }
+            console.log("set 144 ")
+
+            this.mc.setHz("144hz")
             return
         }
 
-
-        var mc = this.sprites["mc"]
 
         // Controls
         // try catch for case for when animations were still being loaded
         // durig runtime init    
         try {
-            if (!mc.isBusy()) {
+            console.log(ctrl.d)
+            if (!this.mc.isBusy()) {
                 if (!ctrl.s && !ctrl.d && !ctrl.space) {
-                    mc.setAnimation("idle")
+                    this.mc.setAnimation("_Idle.png")
                 }
                 if (ctrl.s) {
-                    mc.setAnimation("crouch")
+                    this.mc.setAnimation("_CrouchAll.png")
                 }
                 if (ctrl.d) {
-                    mc.setAnimation("run")
+                    this.mc.setAnimation("_Run.png")
                 }
                 if (ctrl.space) {
-                    mc.setAnimation("jump")
+                    this.mc.setAnimation("jump")
                 }
             }
         }
@@ -170,9 +153,14 @@ class Game {
 
         ctx.drawImage(this.background, 0, 0, canvas.width, canvas.height)
 
-        for (var key in this.sprites) {
-            this.sprites[key].update()
+
+        // update stage, mc and enemies
+        for (var key in this.stage) {
+            this.stage[key].update()
         }
+
+        this.mc.update()
+
     }
 
 }

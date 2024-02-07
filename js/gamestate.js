@@ -31,7 +31,8 @@ class Game {
         const mcImages = [
             './img/mc/_Idle.png',
             './img/mc/_Run.png',
-            './img/mc/_CrouchAll.png'
+            './img/mc/_Crouch.png',
+            './img/mc/_Roll.png'
         ]
 
 
@@ -79,7 +80,9 @@ class Game {
 
         // Pre-load Main character sprite Images (animations)
         Promise.all(mcImages.map(loadImage)).then(images => {
+
             var loadedImages = new Object()
+
             images.forEach((image) =>
                 loadedImages[image.src.split('img/mc/').pop()] = image
             );
@@ -111,8 +114,6 @@ class Game {
             for (var key in this.sprites) {
                 this.stage[key].setHz(this.hzMode)
             }
-            console.log("set 144 ")
-
             this.mc.setHz("144hz")
             return
         }
@@ -121,28 +122,8 @@ class Game {
         // Controls
         // try catch for case for when animations were still being loaded
         // durig runtime init    
-        try {
-            console.log(ctrl.d)
-            if (!this.mc.isBusy()) {
-                if (!ctrl.s && !ctrl.d && !ctrl.space) {
-                    this.mc.setAnimation("_Idle.png")
-                }
-                if (ctrl.s) {
-                    this.mc.setAnimation("_CrouchAll.png")
-                }
-                if (ctrl.d) {
-                    this.mc.setAnimation("_Run.png")
-                }
-                if (ctrl.space) {
-                    this.mc.setAnimation("jump")
-                }
-            }
-        }
-        catch {
-
-        }
-
-
+        try { this.mc.do(ctrl) }
+        catch { }
 
         this.draw()
     }

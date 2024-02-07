@@ -23,6 +23,8 @@ const ctrl = {
 
     // Mouse and movement
     mouse: { x: 0, y: 0, down: false, up: false },
+    a: false,
+
     s: false,
     d: false,
     space: false
@@ -100,7 +102,10 @@ window.addEventListener('keydown', (event) => {
                 ctrl.pause = true
             break
 
-        // Movement 
+        // Movement
+        case 'a':
+            ctrl.a = true
+            break 
         case 's':
             ctrl.s = true
             break
@@ -120,6 +125,10 @@ window.addEventListener('keyup', (event) => {
     console.log(event.key)
     switch (event.key) {
         // Movement 
+
+        case 'a':
+            ctrl.a = false
+            break
         case 's':
             ctrl.s = false
             break

@@ -24,6 +24,8 @@ class SpriteSheet {
     this.spriteDims = spriteDims
     this.ColRow = ColRow
 
+    this.flipped = false
+
 
     // Logic to split up the rows and collumns evenly depending on 
     // either being provided the sprite dimensions or the rows and collumns
@@ -144,6 +146,26 @@ class SpriteSheet {
   // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
   // Ref: README
   draw() {
+
+    console.log(this.position)
+    if (this.flipped) {
+      //this.mirrorImage(ctx, this.image, 0, 0, true, false);
+
+      this.mirrorImage2(
+        this.image,
+        this.curCol * (this.image.width / this.cols),
+        this.curRow * (this.image.height / this.rows),
+        this.position.x,
+        this.position.y,
+  
+        // redraw w/ new dims
+        this.spriteDims.width * this.scale,
+        this.spriteDims.height * this.scale
+        )
+      console.log("flippd")
+      return
+    }
+
     ctx.drawImage(
       this.image,
 
@@ -163,7 +185,44 @@ class SpriteSheet {
       this.spriteDims.width * this.scale,
       this.spriteDims.height * this.scale
     )
+
+
+
+
   }
+
+  mirrorImage(ctx, image, x = 0, y = 0, horizontal = false, vertical = false) {
+    ctx.save();  // save the current canvas state
+    ctx.setTransform(
+      horizontal ? -1 : 1, 0, // set the direction of x axis
+      0, vertical ? -1 : 1,   // set the direction of y axis
+      x + horizontal ? image.width : 0, // set the x origin
+      y + vertical ? image.height : 0   // set the y origin
+    );
+    ctx.drawImage(
+      this.image,
+
+      // Crop src sx,sy  
+      this.curCol * (this.image.width / this.cols),
+      this.curRow * (this.image.height / this.rows),
+
+      // Crop dims of src
+      this.spriteDims.width,
+      this.spriteDims.height,
+
+      // pos destination
+      this.position.x,
+      this.position.y,
+
+      // redraw w/ new dims
+      this.spriteDims.width * this.scale,
+      this.spriteDims.height * this.scale
+    )
+    ctx.restore(); // restore the state as it was when this function was called
+  }
+
+
+  
 
 
   // primary animation method.
@@ -222,7 +281,7 @@ class MainCharacter {
     scale = 1,
     framesHold = 7,
     position,
-    velocity = 1
+    velocity = 3
   }) {
 
     this.spriteDims = spriteDims
@@ -232,15 +291,28 @@ class MainCharacter {
     this.velocity = velocity
     this.allAnimations = {}
     this.curAnimation
+    this.flipped = false;
   }
 
 
-  // reports whether or not the animation is busy and can be canceled
-  isBusy() {
+  do(ctrl) {
 
-    return false;
+    if (!ctrl.d && !ctrl.a) {
+      this.curAnimation = "_Idle.png"
 
+    }
 
+    if (ctrl.a) {
+      this.curAnimation = "_Run.png"
+      this.position.x -= this.velocity
+      this.flipped = true
+    }
+
+    if (ctrl.d) {
+      this.curAnimation = "_Run.png"
+      this.position.x += this.velocity
+      this.flipped = false
+    }
   }
 
   setHz(hz) {
@@ -251,15 +323,13 @@ class MainCharacter {
 
   setAnimation(a) {
     this.curAnimation = a
-
   }
 
   // Takes a dictionary of loaded images
   // and creates the spritesheet animations for MC
   addAnimations(loadedImages) {
+
     let animations = {}
-
-
     for (var key in loadedImages) {
       switch (key) {
 
@@ -271,22 +341,29 @@ class MainCharacter {
             ColRow: { cols: 10, rows: 1 }
           })
           break
-
         case '_Run.png':
           animations[key] = new SpriteSheet({
             image: loadedImages[key],
-            framesHold: 5,
+            framesHold: 7,
             scale: this.scale,
             ColRow: { cols: 10, rows: 1 }
           })
           break
 
-          case '_CrouchAll.png':
+        case '_Crouch.png':
           animations[key] = new SpriteSheet({
             image: loadedImages[key],
-            framesHold: 15,
             scale: this.scale,
-            ColRow: { cols: 3, rows: 1 }
+          })
+          break
+
+        case '_Roll.png':
+          animations[key] = new SpriteSheet({
+            image: loadedImages[key],
+            scale: this.scale,
+            ColRow: { cols: 12, rows: 1 },
+            framesHold: 10
+
           })
           break
       }
@@ -302,8 +379,10 @@ class MainCharacter {
   }
 
   update() {
-    // Handle animation velocity physics stuffs
 
+    // Handle animation velocity physics stuffs
+    this.allAnimations[this.curAnimation].position = this.position
+    this.allAnimations[this.curAnimation].flipped = this.flipped
     this.draw()
 
   }

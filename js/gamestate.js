@@ -60,6 +60,7 @@ class Game {
             const shop = new SpriteSheet({
                 image: loadedImages["shop.png"],
                 scale: 3.5,
+                flipped: false,
                 framesHold: 14,
                 position: { x: 300, y: 300 },
                 spriteDims: { width: 118, height: 128 },
@@ -69,6 +70,7 @@ class Game {
             const lamp = new SpriteSheet({
                 image: loadedImages["lamp.png"],
                 scale: 2.5,
+                flipped :true,
                 position: { x: 300, y: 300 }
             })
 

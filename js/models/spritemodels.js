@@ -10,6 +10,7 @@ class SpriteSheet {
     position = { x: 0, y: 0 },
     spriteDims = { width: 1, height: 1 },
     ColRow = { cols: 1, rows: 1 },
+    flipped = false
   }) {
 
     // Error handling
@@ -24,7 +25,7 @@ class SpriteSheet {
     this.spriteDims = spriteDims
     this.ColRow = ColRow
 
-    this.flipped = false
+    this.flipped = flipped
 
 
     // Logic to split up the rows and collumns evenly depending on 
@@ -147,25 +148,13 @@ class SpriteSheet {
   // Ref: README
   draw() {
 
-    console.log(this.position)
+    // Setup to draw flipped animation
     if (this.flipped) {
-      //this.mirrorImage(ctx, this.image, 0, 0, true, false);
-
-      this.mirrorImage2(
-        this.image,
-        this.curCol * (this.image.width / this.cols),
-        this.curRow * (this.image.height / this.rows),
-        this.position.x,
-        this.position.y,
-  
-        // redraw w/ new dims
-        this.spriteDims.width * this.scale,
-        this.spriteDims.height * this.scale
-        )
-      console.log("flippd")
-      return
+      ctx.save();
+      ctx.scale(-1, 1);
     }
 
+    // Draw normally
     ctx.drawImage(
       this.image,
 
@@ -177,9 +166,11 @@ class SpriteSheet {
       this.spriteDims.width,
       this.spriteDims.height,
 
-      // pos destination
-      this.position.x,
+      // pos destination (Flipped : Regular)
+      this.flipped ? (this.position.x + this.spriteDims.width * 3) * -1 : this.position.x,
       this.position.y,
+
+
 
       // redraw w/ new dims
       this.spriteDims.width * this.scale,
@@ -187,43 +178,11 @@ class SpriteSheet {
     )
 
 
-
+    if (this.flipped) {
+      ctx.restore();
+    }
 
   }
-
-  mirrorImage(ctx, image, x = 0, y = 0, horizontal = false, vertical = false) {
-    ctx.save();  // save the current canvas state
-    ctx.setTransform(
-      horizontal ? -1 : 1, 0, // set the direction of x axis
-      0, vertical ? -1 : 1,   // set the direction of y axis
-      x + horizontal ? image.width : 0, // set the x origin
-      y + vertical ? image.height : 0   // set the y origin
-    );
-    ctx.drawImage(
-      this.image,
-
-      // Crop src sx,sy  
-      this.curCol * (this.image.width / this.cols),
-      this.curRow * (this.image.height / this.rows),
-
-      // Crop dims of src
-      this.spriteDims.width,
-      this.spriteDims.height,
-
-      // pos destination
-      this.position.x,
-      this.position.y,
-
-      // redraw w/ new dims
-      this.spriteDims.width * this.scale,
-      this.spriteDims.height * this.scale
-    )
-    ctx.restore(); // restore the state as it was when this function was called
-  }
-
-
-  
-
 
   // primary animation method.
   // This method will increment the rows for longer animations
@@ -281,7 +240,7 @@ class MainCharacter {
     scale = 1,
     framesHold = 7,
     position,
-    velocity = 3
+    velocity = 5
   }) {
 
     this.spriteDims = spriteDims

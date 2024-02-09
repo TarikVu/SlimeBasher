@@ -4,8 +4,9 @@ const canvas = document.getElementById("gamescreen")
 const ctx = canvas.getContext('2d');
 
 // Set up game screen
-canvas.width = 1440
+ canvas.width = 1440
 canvas.height = 900
+ 
 
 const game = new Game()
 const pauseMenu = new PauseMenu()
@@ -85,17 +86,19 @@ canvas.addEventListener("mouseup", function (e) {
 
 // Record User inputted keyboard keys
 window.addEventListener('keydown', (event) => {
-    console.log(event.key)
+    //console.log(event.key)
+    let key = event.key.toLowerCase()
+
 
     // stops window from scrolling w/ space
-    if (event.key == " " && event.target == document.body) {
+    if (key == " " && event.target == document.body) {
         event.preventDefault();
     }
 
-    switch (event.key) {
+    switch (key) {
 
         // Pause
-        case 'Escape':
+        case 'escape':
             if (ctrl.pause)
                 ctrl.pause = false
             else
@@ -122,8 +125,9 @@ window.addEventListener('keydown', (event) => {
 
 // Record User inputted keyboard keys
 window.addEventListener('keyup', (event) => {
-    console.log(event.key)
-    switch (event.key) {
+    //console.log(event.key)
+    let key = event.key.toLowerCase()
+    switch (key) {
         // Movement 
 
         case 'a':

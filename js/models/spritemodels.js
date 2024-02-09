@@ -167,10 +167,8 @@ class SpriteSheet {
       this.spriteDims.height,
 
       // pos destination (Flipped : Regular)
-      this.flipped ? (this.position.x + this.spriteDims.width * 3) * -1 : this.position.x,
+      this.flipped? (this.position.x + this.spriteDims.width * this.scale) * -1 : this.position.x,
       this.position.y,
-
-
 
       // redraw w/ new dims
       this.spriteDims.width * this.scale,
@@ -179,7 +177,7 @@ class SpriteSheet {
 
 
     if (this.flipped) {
-      ctx.restore();
+     ctx.restore();
     }
 
   }
@@ -235,30 +233,22 @@ class SpriteSheet {
 // Character sprites like our MC 
 // will have movement, hitboxes and more complex animations.
 class MainCharacter {
-  constructor({
-    spriteDims,
-    scale = 1,
-    framesHold = 7,
-    position,
-    velocity = 5
-  }) {
-
-    this.spriteDims = spriteDims
-    this.scale = scale
-    this.framesHold = framesHold
-    this.position = position
-    this.velocity = velocity
+  constructor() {
+    this.scale = 3
+    this.velocity = 5
+    this.framesHold = 7
+    this.flipped = false;
+    this.position = { x: 300, y: 300 }
+    this.spriteDims = { width: 38, height: 20 }
     this.allAnimations = {}
     this.curAnimation
-    this.flipped = false;
+    
   }
-
 
   do(ctrl) {
 
     if (!ctrl.d && !ctrl.a) {
       this.curAnimation = "_Idle.png"
-
     }
 
     if (ctrl.a) {
@@ -271,6 +261,11 @@ class MainCharacter {
       this.curAnimation = "_Run.png"
       this.position.x += this.velocity
       this.flipped = false
+    }
+
+    if (ctrl.space) {
+      this.curAnimation = "_Roll.png"
+     // this.velocity = this.velocity * 2
     }
   }
 
@@ -321,7 +316,7 @@ class MainCharacter {
             image: loadedImages[key],
             scale: this.scale,
             ColRow: { cols: 12, rows: 1 },
-            framesHold: 10
+            framesHold: 5
 
           })
           break

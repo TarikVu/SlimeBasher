@@ -13,13 +13,7 @@ class Game {
         this.hzMode = "144hz"
         this.loaded = false
 
-        // Construct Main character
-        this.mc = new MainCharacter({
-            spriteDims: { width: 38, height: 20 },
-            scale: 3,
-            position: { x: 300, y: 300 },
-
-        })
+        this.mc = new MainCharacter()
 
         // Paths to images to be loaded in
         const stageImages = [
@@ -69,7 +63,7 @@ class Game {
 
             const lamp = new SpriteSheet({
                 image: loadedImages["lamp.png"],
-                scale: 2.5,
+                scale: 2,
                 flipped :true,
                 position: { x: 300, y: 300 }
             })
@@ -135,7 +129,6 @@ class Game {
     draw() {
 
         ctx.drawImage(this.background, 0, 0, canvas.width, canvas.height)
-
 
         // update stage, mc and enemies
         for (var key in this.stage) {

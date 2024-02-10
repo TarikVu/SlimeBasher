@@ -12,6 +12,7 @@ class Game {
 
         this.hzMode = "144hz"
         this.loaded = false
+        this.floor = 836  // Top of grass
 
         this.mc = new MainCharacter()
 
@@ -20,6 +21,9 @@ class Game {
             //'./img/mc-sheet.png',
             './img/shop.png',
             './img/lamp.png',
+            './img/grass.png',
+            './img/tree1.png',
+            './img/tree2.png',
         ]
 
         const mcImages = [
@@ -28,6 +32,7 @@ class Game {
             './img/mc/_Crouch.png',
             './img/mc/_Roll.png'
         ]
+
 
 
         // *runtime* Used to load images (ref README)
@@ -51,26 +56,56 @@ class Game {
             );
 
             // Construct the Sprites of the game world. 
+
+            const grass = new SpriteSheet({
+                image: loadedImages["grass.png"],
+                scale: 2,
+                position: { x: 0, y: 836 }
+            })
+
             const shop = new SpriteSheet({
                 image: loadedImages["shop.png"],
                 scale: 3.5,
                 flipped: false,
                 framesHold: 14,
-                position: { x: 300, y: 300 },
                 spriteDims: { width: 118, height: 128 },
                 //ColRow: { cols: 6, rows: 1 },
             })
+            shop.toFloor(this.floor)
+            shop.position.x = 200
 
             const lamp = new SpriteSheet({
                 image: loadedImages["lamp.png"],
                 scale: 2,
-                flipped :true,
-                position: { x: 300, y: 300 }
             })
+            lamp.toFloor(this.floor) 
+            lamp.position.x = 680
+
+            const tree1 =new SpriteSheet({
+                image: loadedImages['tree1.png'],
+                flipped: true,
+                scale:4
+            })
+            tree1.toFloor(this.floor)
+            tree1.position.x = 15
+
+            const tree2 =new SpriteSheet({
+                image: loadedImages['tree2.png'],
+                flipped: true,
+                scale: 3.5
+            })
+            tree2.toFloor(this.floor)
+            tree2.position.x = 550
+
+
 
             // Push to list of sprites to be drawn. 
+            this.stage["tree1"] = tree1
             this.stage["shop"] = shop
+            this.stage["tree2"] = tree2
             this.stage["lamp"] = lamp
+            this.stage["grass"] = grass
+
         })
 
 
@@ -84,6 +119,7 @@ class Game {
             );
 
             this.mc.addAnimations(loadedImages)
+
             this.loaded = true;
 
         })

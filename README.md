@@ -41,3 +41,33 @@ Preloading images as a "promise"
 - [Enviroment Assets](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
 - [Pause Menu](https://srtoasty.itch.io/ui-assets-pack-2)
 
+
+---
+## FOR THE WIKI 
+### Things I Learned
+
+- Spritesheet would be a stronger class if sub classes such as mobs,
+players, static sprites could all inherit from sprite sheet.  This way we can better focus on specific classes and their needs.
+- All Sprites in the future should share 
+  - Position
+  - image
+  - a means to crop a specific part of the sheet. ( this would be done by providing the 
+  rows and cols,  then a developer can specify the col, row to crop from and then save those coordinates in a dict with the sprite name as the key and the coordinates as the value.)
+  - a boundary (hitbox) the hitbox would differ than the position values.  this would be beneficial for collision detection.  This is also necessary because the starting drawing position for spritesheets often have padding starting at the top right
+
+- inverting sprite animations:
+  - This topic took a few days to finally get the sprite to flip properly for canva's draw function.  
+  - Simply put, we can keep track of a sprite's flipped state with a simple boolean.
+  Then we would save and then scale the context.  Since the whole context is scaled, the coordinates of the top left being the origin is flipped depending on what was used inside of scale(x,y) **Refer spritemodels.js draw function**.  In this case, the x axis is modified,
+  - After the context is inverted on the x axis, the position destination will have a formula of:
+  **(sprite.position + spritedimensions.width * spritescale) * - 1**
+  - Before, if a sprite's animation (run for example) did not have a flipped variant
+  and the animation would only run right, creating a copy & flipping the .png file itself would result in the animation being flipped, but also be played in reverse.  (Moonwalk!)
+  - for future purposes, instead of manually inputting file paths into an array to be pre loaded, Utilize a method to detect all the img files in a folder and write them into an array, then use that array for the preloading. 
+
+  - It is important to be mindful of artstyles.  Right now all the assests come from different art styles and is noticeable.
+
+  - Hardcoding the position of the objects will not let them resize with the 
+  canvas if there were a resolution setting. We must set the scaling and position relative to the size of the game window. **This should be one of the first steps when making the next game!!!!**
+
+  - FramesHold is a rudementary fix for frame animations.  There must be a better method for frame timing and the framerate.

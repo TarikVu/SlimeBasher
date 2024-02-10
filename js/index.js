@@ -4,9 +4,11 @@ const canvas = document.getElementById("gamescreen")
 const ctx = canvas.getContext('2d');
 
 // Set up game screen
- canvas.width = 1440
-canvas.height = 900
- 
+canvas.width = 1440
+canvas.height = 900 
+
+
+
 
 const game = new Game()
 const pauseMenu = new PauseMenu()
@@ -25,7 +27,6 @@ const ctrl = {
     // Mouse and movement
     mouse: { x: 0, y: 0, down: false, up: false },
     a: false,
-
     s: false,
     d: false,
     space: false
@@ -56,8 +57,9 @@ function animate() {
         return // Skip updating world on pause
     }
 
-    if (game.loaded){
-    game.update(ctrl)}
+    if (game.loaded) {
+        game.update(ctrl)
+    }
 
 }
 
@@ -108,7 +110,7 @@ window.addEventListener('keydown', (event) => {
         // Movement
         case 'a':
             ctrl.a = true
-            break 
+            break
         case 's':
             ctrl.s = true
             break

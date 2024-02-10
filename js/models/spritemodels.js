@@ -84,6 +84,12 @@ class SpriteSheet {
     this.animations = {}
   }
 
+  // Sets the bottom of the sprite to the floor of the world.
+  // This assumes that the bottom of the png draw has no empty space.
+  toFloor(floor) {
+    this.position.y = floor - this.image.height * this.scale
+  }
+
   // Sets the hz scaling factor for different monitors. (144 hz default)
   // This prevents animations from cyling too fast / slow on 60 or 144 hz monitors.
   setHz(hz) {
@@ -167,7 +173,7 @@ class SpriteSheet {
       this.spriteDims.height,
 
       // pos destination (Flipped : Regular)
-      this.flipped? (this.position.x + this.spriteDims.width * this.scale) * -1 : this.position.x,
+      this.flipped ? (this.position.x + this.spriteDims.width * this.scale) * -1 : this.position.x,
       this.position.y,
 
       // redraw w/ new dims
@@ -177,7 +183,7 @@ class SpriteSheet {
 
 
     if (this.flipped) {
-     ctx.restore();
+      ctx.restore();
     }
 
   }
@@ -221,7 +227,6 @@ class SpriteSheet {
   update() {
 
     if (!this.static) {
-
       this.animateFrames()
     }
 
@@ -238,15 +243,26 @@ class MainCharacter {
     this.velocity = 5
     this.framesHold = 7
     this.flipped = false;
-    this.position = { x: 300, y: 300 }
+    this.position = { x: 400, y: 200 } // 596 is ground.
     this.spriteDims = { width: 38, height: 20 }
     this.allAnimations = {}
     this.curAnimation
-    
+
+    // May need to acount for flipped variant later on. 
+    this.hitBox = {
+
+      min_x: this.position.x ,
+      min_y: this.position.y ,
+
+      max_x: this.position.x + this.spriteDims.width ,
+      max_y: this.position.y + this.spriteDims.height ,
+
+    }
   }
 
   do(ctrl) {
 
+    // Track sprite 
     if (!ctrl.d && !ctrl.a) {
       this.curAnimation = "_Idle.png"
     }
@@ -265,7 +281,7 @@ class MainCharacter {
 
     if (ctrl.space) {
       this.curAnimation = "_Roll.png"
-     // this.velocity = this.velocity * 2
+      // this.velocity = this.velocity * 2
     }
   }
 
@@ -344,6 +360,20 @@ class MainCharacter {
 
   draw() {
     this.allAnimations[this.curAnimation].update()
+
+    ctx.fillStyle = 'green'
+
+    //ctx.fillRect(0,0,500,500)
+
+    console.log(this.hitBox)
+
+
+    ctx.fillRect(
+      this.hitBox.min_x,
+      this.hitBox.min_y,
+
+      this.hitBox.max_x,
+      this.hitBox.max_y)
   }
 }
 

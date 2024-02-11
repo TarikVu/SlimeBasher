@@ -5,7 +5,7 @@ const ctx = canvas.getContext('2d');
 
 // Set up game screen
 canvas.width = 1440
-canvas.height = 900 
+canvas.height = 900
 
 
 
@@ -29,6 +29,7 @@ const ctrl = {
     a: false,
     s: false,
     d: false,
+    shift: false,
     space: false
 }
 
@@ -88,7 +89,7 @@ canvas.addEventListener("mouseup", function (e) {
 
 // Record User inputted keyboard keys
 window.addEventListener('keydown', (event) => {
-    //console.log(event.key)
+    console.log(event.key)
     let key = event.key.toLowerCase()
 
 
@@ -98,7 +99,6 @@ window.addEventListener('keydown', (event) => {
     }
 
     switch (key) {
-
         // Pause
         case 'escape':
             if (ctrl.pause)
@@ -111,11 +111,17 @@ window.addEventListener('keydown', (event) => {
         case 'a':
             ctrl.a = true
             break
+
         case 's':
             ctrl.s = true
             break
+
         case 'd':
             ctrl.d = true
+            break
+
+        case 'shift':
+            ctrl.shift = true
             break
 
         case ' ':
@@ -130,16 +136,22 @@ window.addEventListener('keyup', (event) => {
     //console.log(event.key)
     let key = event.key.toLowerCase()
     switch (key) {
-        // Movement 
 
+        // Movement 
         case 'a':
             ctrl.a = false
             break
+
         case 's':
             ctrl.s = false
             break
+
         case 'd':
             ctrl.d = false
+            break
+
+        case 'shift':
+            ctrl.shift = false
             break
 
         case ' ':

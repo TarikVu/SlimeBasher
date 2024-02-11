@@ -308,7 +308,7 @@ class MainCharacter {
     this.velocity = 5
     this.framesHold = 7
     this.flipped = false;
-    this.position = { x: 400, y: 200 } // 596 is ground.
+    this.position = { x: -70, y: 596 } // 596 is ground.
     this.spriteDims = { width: 38, height: 20 }
     this.allAnimations = {}
     this.curAnimation
@@ -321,46 +321,6 @@ class MainCharacter {
 
       max_x: 0,
       max_y: 0,
-    }
-
-  }
-
-  do(ctrl) {
-
-    // Track sprite 
-    if (!ctrl.d && !ctrl.a) {
-      this.curAnimation = "_Idle.png"
-    }
-
-    if (ctrl.a) {
-      this.curAnimation = "_Run.png"
-
-      // Smooths the flip since sprite is off center on .png
-      if (!this.flipped) {this.position.x -= 17}
-
-      this.position.x -= this.velocity
-      this.flipped = true
-    }
-
-    if (ctrl.d) {
-      this.curAnimation = "_Run.png"
-
-      if (this.flipped) { this.position.x += 17 } 
-      
-      this.position.x += this.velocity
-
-      this.flipped = false
-    }
-
-    if (ctrl.space) {
-      this.curAnimation = "_Roll.png"
-      this.velocity = this.velocity * 2
-    }
-  }
-
-  setHz(hz) {
-    for (var key in this.allAnimations) {
-      this.allAnimations[key].setHz(hz)
     }
   }
 
@@ -385,6 +345,7 @@ class MainCharacter {
             showHitBox: this.showHitbox
           })
           break
+
         case '_Run.png':
           animations[key] = new SpriteSheet({
             image: loadedImages[key],
@@ -416,21 +377,74 @@ class MainCharacter {
 
           })
           break
+
+        case '_Jump.png':
+          animations[key] = new SpriteSheet({
+            image: loadedImages[key],
+            scale: this.scale,
+            ColRow: { cols: 3, rows: 1 },
+            framesHold: 5,
+            showHitBox: this.showHitbox
+          })
+          break
       }
     }
 
     this.allAnimations = animations
-
-
-
-
+    console.log(this.allAnimations)
 
     this.curAnimation = "_Idle.png"
   }
 
+  // Update the Main character based off the controller.
+  do(ctrl) {
+    // Track sprite 
+    if (!ctrl.d && !ctrl.a) {
+      this.curAnimation = "_Idle.png"
+    }
+
+    if (ctrl.a) {
+      this.curAnimation = "_Run.png"
+
+      // Smoothes the flip since sprite is off center on .png
+      if (!this.flipped) { this.position.x -= 17 }
+
+      // LHS boundary
+      if (this.hitBox.min_x > 0) {
+        this.position.x -= this.velocity
+      }
+      this.flipped = true
+    }
+
+    if (ctrl.d) {
+      this.curAnimation = "_Run.png"
+
+      if (this.flipped) { this.position.x += 17 }
+      if (this.hitBox.max_x < canvas.width) {
+        this.position.x += this.velocity
+      }
+      this.flipped = false
+    }
+
+    if (ctrl.shift) {
+      this.curAnimation = "_Roll.png"
+      //this.velocity = this.velocity * 2
+    }
+
+    if (ctrl.space) {
+      this.curAnimation = '_Jump.png'
+    }
+  }
+
+  setHz(hz) {
+    for (var key in this.allAnimations) {
+      this.allAnimations[key].setHz(hz)
+    }
+  }
+
   update() {
 
-    // Handle animation velocity physics stuffs
+    // Update position, and orientation
     var animation = this.allAnimations[this.curAnimation]
     animation.position = this.position
     animation.flipped = this.flipped
@@ -458,8 +472,8 @@ class MainCharacter {
 
 
   draw() {
-    this.allAnimations[this.curAnimation].update()
 
+    this.allAnimations[this.curAnimation].update()
 
     if (this.showHitbox) {
 

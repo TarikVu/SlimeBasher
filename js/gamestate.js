@@ -30,7 +30,8 @@ class Game {
             './img/mc/_Idle.png',
             './img/mc/_Run.png',
             './img/mc/_Crouch.png',
-            './img/mc/_Roll.png'
+            './img/mc/_Roll.png',
+            './img/mc/_Jump.png'
         ]
 
 

@@ -209,11 +209,9 @@ class SpriteSheet {
 
     //ctx.fillRect(0,0,500,500)
 
-    console.log(this.hitBox)
+    //console.log(this.hitBox)
 
     if (this.showHitbox) {
-
-
       // dx dy position drawn
       ctx.globalAlpha = 1.0;
       ctx.fillStyle = 'red'
@@ -223,7 +221,7 @@ class SpriteSheet {
         5,
         5,
       )
-      
+
 
       // Draw a transparent hitbox
       ctx.globalAlpha = 0.4;
@@ -244,6 +242,8 @@ class SpriteSheet {
         5,
         5,
       )
+
+
     }
   }
 
@@ -304,7 +304,7 @@ class SpriteSheet {
 // will have movement, hitboxes and more complex animations.
 class MainCharacter {
   constructor() {
-    this.scale = 3
+    this.scale = 3 // default 3
     this.velocity = 5
     this.framesHold = 7
     this.flipped = false;
@@ -313,8 +313,15 @@ class MainCharacter {
     this.allAnimations = {}
     this.curAnimation
 
-    this.showHitbox = true
+    this.showHitbox = false
 
+    this.hitBox = {
+      min_x: 0,
+      min_y: 0,
+
+      max_x: 0,
+      max_y: 0,
+    }
 
   }
 
@@ -327,19 +334,27 @@ class MainCharacter {
 
     if (ctrl.a) {
       this.curAnimation = "_Run.png"
+
+      // Smooths the flip since sprite is off center on .png
+      if (!this.flipped) {this.position.x -= 17}
+
       this.position.x -= this.velocity
       this.flipped = true
     }
 
     if (ctrl.d) {
       this.curAnimation = "_Run.png"
+
+      if (this.flipped) { this.position.x += 17 } 
+      
       this.position.x += this.velocity
+
       this.flipped = false
     }
 
     if (ctrl.space) {
       this.curAnimation = "_Roll.png"
-      // this.velocity = this.velocity * 2
+      this.velocity = this.velocity * 2
     }
   }
 
@@ -416,11 +431,26 @@ class MainCharacter {
   update() {
 
     // Handle animation velocity physics stuffs
-    this.allAnimations[this.curAnimation].position = this.position
-    this.allAnimations[this.curAnimation].flipped = this.flipped
+    var animation = this.allAnimations[this.curAnimation]
+    animation.position = this.position
+    animation.flipped = this.flipped
 
+    // Update Maincharacter's hitbox (Manually) relative to 
+    // the spritesheets hit box and add padding to fit the sprite
+    if (!this.flipped) {
+      var min_xpad = 128
+      var max_xpad = this.curAnimation == "_Run.png" ? 143 : 160
+    }
+    else {
+      var min_xpad = this.curAnimation == "_Run.png" ? 145 : 160
+      var max_xpad = 126
+    }
 
+    this.hitBox.min_x = animation.hitBox.min_x + min_xpad
+    this.hitBox.min_y = animation.hitBox.min_y + 120
 
+    this.hitBox.max_x = animation.hitBox.max_x - max_xpad
+    this.hitBox.max_y = animation.hitBox.max_y
 
     this.draw()
 
@@ -430,6 +460,22 @@ class MainCharacter {
   draw() {
     this.allAnimations[this.curAnimation].update()
 
+
+    if (this.showHitbox) {
+
+      ctx.globalAlpha = 0.5;
+      ctx.fillStyle = 'blue'
+      console.log(this.hitBox.min_y)
+      ctx.fillRect(
+        this.hitBox.min_x,
+        this.hitBox.min_y,
+
+        this.hitBox.max_x - this.hitBox.min_x,
+        this.hitBox.max_y - this.hitBox.min_y,
+
+      )
+      ctx.globalAlpha = 1.0;
+    }
 
   }
 }

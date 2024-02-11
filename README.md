@@ -70,4 +70,7 @@ players, static sprites could all inherit from sprite sheet.  This way we can be
   - Hardcoding the position of the objects will not let them resize with the 
   canvas if there were a resolution setting. We must set the scaling and position relative to the size of the game window. **This should be one of the first steps when making the next game!!!!**
 
+  - Development process should start with a canvas and then a single sprite inside that canvas. This sprite along with its animations and hitboxes need to scale appropriately with
+  the canas dimensions. 
+
   - FramesHold is a rudementary fix for frame animations.  There must be a better method for frame timing and the framerate.

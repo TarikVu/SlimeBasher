@@ -399,11 +399,11 @@ class MainCharacter {
   // Update the Main character based off the controller.
   do(ctrl) {
     // Track sprite 
-    if (!ctrl.d && !ctrl.a) {
+    if (!ctrl.right && !ctrl.left) {
       this.curAnimation = "_Idle.png"
     }
 
-    if (ctrl.a) {
+    if (ctrl.left) {
       this.curAnimation = "_Run.png"
 
       // Smoothes the flip since sprite is off center on .png
@@ -416,7 +416,7 @@ class MainCharacter {
       this.flipped = true
     }
 
-    if (ctrl.d) {
+    if (ctrl.right) {
       this.curAnimation = "_Run.png"
 
       if (this.flipped) { this.position.x += 17 }
@@ -426,12 +426,12 @@ class MainCharacter {
       this.flipped = false
     }
 
-    if (ctrl.shift) {
+    if (ctrl.roll) {
       this.curAnimation = "_Roll.png"
       //this.velocity = this.velocity * 2
     }
 
-    if (ctrl.space) {
+    if (ctrl.jump) {
       this.curAnimation = '_Jump.png'
     }
   }

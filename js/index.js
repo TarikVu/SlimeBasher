@@ -26,11 +26,11 @@ const ctrl = {
 
     // Mouse and movement
     mouse: { x: 0, y: 0, down: false, up: false },
-    a: false,
-    s: false,
-    d: false,
-    shift: false,
-    space: false
+    left: false,
+    down: false,
+    right: false,
+    roll: false,
+    jump: false
 }
 
 // For animation purposes
@@ -108,24 +108,20 @@ window.addEventListener('keydown', (event) => {
             break
 
         // Movement
+        case 'w':
+            ctrl.jump = true
+            break
         case 'a':
-            ctrl.a = true
+            ctrl.left = true
             break
-
         case 's':
-            ctrl.s = true
+            ctrl.down = true
             break
-
         case 'd':
-            ctrl.d = true
+            ctrl.right = true
             break
-
-        case 'shift':
-            ctrl.shift = true
-            break
-
         case ' ':
-            ctrl.space = true
+            ctrl.roll = true
             break
 
     }
@@ -138,25 +134,27 @@ window.addEventListener('keyup', (event) => {
     switch (key) {
 
         // Movement 
+        case 'w':
+            ctrl.jump = false
+            break
+
         case 'a':
-            ctrl.a = false
+            ctrl.left = false
             break
 
         case 's':
-            ctrl.s = false
+            ctrl.down = false
             break
 
         case 'd':
-            ctrl.d = false
-            break
-
-        case 'shift':
-            ctrl.shift = false
+            ctrl.right = false
             break
 
         case ' ':
-            ctrl.space = false
+            ctrl.roll = false
             break
+
+        
     }
 })
 

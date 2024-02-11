@@ -78,20 +78,18 @@ class Game {
                 image: loadedImages["lamp.png"],
                 scale: 2,
             })
-            lamp.toFloor(this.floor) 
-            lamp.position.x = 680
+            lamp.toFloor(this.floor)
+            lamp.position.x = 720
 
-            const tree1 =new SpriteSheet({
+            const tree1 = new SpriteSheet({
                 image: loadedImages['tree1.png'],
-                flipped: true,
-                scale:4
+                scale: 4
             })
             tree1.toFloor(this.floor)
-            tree1.position.x = 15
+            tree1.position.x = 20
 
-            const tree2 =new SpriteSheet({
+            const tree2 = new SpriteSheet({
                 image: loadedImages['tree2.png'],
-                flipped: true,
                 scale: 3.5
             })
             tree2.toFloor(this.floor)
@@ -100,11 +98,12 @@ class Game {
 
 
             // Push to list of sprites to be drawn. 
+            this.stage["grass"] = grass
+
             this.stage["tree1"] = tree1
             this.stage["shop"] = shop
             this.stage["tree2"] = tree2
             this.stage["lamp"] = lamp
-            this.stage["grass"] = grass
 
         })
 

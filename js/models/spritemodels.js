@@ -10,7 +10,8 @@ class SpriteSheet {
     position = { x: 0, y: 0 },
     spriteDims = { width: 1, height: 1 },
     ColRow = { cols: 1, rows: 1 },
-    flipped = false
+    flipped = false,
+    showHitBox = false
   }) {
 
     // Error handling
@@ -82,6 +83,21 @@ class SpriteSheet {
 
     // Dictionary Holding the different animations in a sprite sheet
     this.animations = {}
+
+    // Hitbox of the sprite 
+    this.showHitbox = showHitBox
+
+
+    this.hitBox = {
+
+      min_x: this.position.x,
+      min_y: this.position.y,
+
+      max_x: (this.position.x + this.spriteDims.width) * this.scale,
+      max_y: (this.position.y + this.spriteDims.height) * this.scale,
+
+    }
+
   }
 
   // Sets the bottom of the sprite to the floor of the world.
@@ -172,8 +188,11 @@ class SpriteSheet {
       this.spriteDims.width,
       this.spriteDims.height,
 
-      // pos destination (Flipped : Regular)
-      this.flipped ? (this.position.x + this.spriteDims.width * this.scale) * -1 : this.position.x,
+      // pos destinations (Flipped : Regular)
+      this.flipped ?
+        (this.position.x + this.spriteDims.width * this.scale) * -1 :
+        this.position.x,
+
       this.position.y,
 
       // redraw w/ new dims
@@ -181,11 +200,51 @@ class SpriteSheet {
       this.spriteDims.height * this.scale
     )
 
-
     if (this.flipped) {
       ctx.restore();
     }
 
+    // Draw the hitbox (debugging purposes)
+    ctx.fillStyle = 'green'
+
+    //ctx.fillRect(0,0,500,500)
+
+    console.log(this.hitBox)
+
+    if (this.showHitbox) {
+
+
+      // dx dy position drawn
+      ctx.globalAlpha = 1.0;
+      ctx.fillStyle = 'red'
+      ctx.fillRect(
+        this.position.x,
+        this.position.y,
+        5,
+        5,
+      )
+      
+
+      // Draw a transparent hitbox
+      ctx.globalAlpha = 0.4;
+      ctx.fillStyle = 'green'
+      ctx.fillRect(
+        this.hitBox.min_x,
+        this.hitBox.min_y,
+        this.spriteDims.width * this.scale,
+        this.spriteDims.height * this.scale,
+      )
+
+      // Shows max values of hitbox
+      ctx.globalAlpha = 1.0;
+      ctx.fillStyle = 'red'
+      ctx.fillRect(
+        this.hitBox.max_x,
+        this.hitBox.max_y,
+        5,
+        5,
+      )
+    }
   }
 
   // primary animation method.
@@ -197,7 +256,6 @@ class SpriteSheet {
     if (this.framesElapsed % (this.framesHold * this.hzScale) === 0) {
 
       if (this.curFrame < this.totalFrames - 1) {
-
 
         if (this.curCol == this.cols - 1) {
           this.curRow++
@@ -230,10 +288,17 @@ class SpriteSheet {
       this.animateFrames()
     }
 
+    // update the hitbox
+    this.hitBox.min_x = this.position.x
+    this.hitBox.min_y = this.position.y
+    this.hitBox.max_x = (this.position.x + this.spriteDims.width * this.scale)
+    this.hitBox.max_y = (this.position.y + this.spriteDims.height * this.scale)
+
+
     this.draw()
   }
 }
-
+///////////////////////////////////////////////////////////////////////////////
 
 // Character sprites like our MC 
 // will have movement, hitboxes and more complex animations.
@@ -248,16 +313,9 @@ class MainCharacter {
     this.allAnimations = {}
     this.curAnimation
 
-    // May need to acount for flipped variant later on. 
-    this.hitBox = {
+    this.showHitbox = true
 
-      min_x: this.position.x ,
-      min_y: this.position.y ,
 
-      max_x: this.position.x + this.spriteDims.width ,
-      max_y: this.position.y + this.spriteDims.height ,
-
-    }
   }
 
   do(ctrl) {
@@ -308,7 +366,8 @@ class MainCharacter {
             image: loadedImages[key],
             framesHold: 15,
             scale: this.scale,
-            ColRow: { cols: 10, rows: 1 }
+            ColRow: { cols: 10, rows: 1 },
+            showHitBox: this.showHitbox
           })
           break
         case '_Run.png':
@@ -316,7 +375,9 @@ class MainCharacter {
             image: loadedImages[key],
             framesHold: 7,
             scale: this.scale,
-            ColRow: { cols: 10, rows: 1 }
+            ColRow: { cols: 10, rows: 1 },
+            showHitBox: this.showHitbox
+
           })
           break
 
@@ -324,6 +385,8 @@ class MainCharacter {
           animations[key] = new SpriteSheet({
             image: loadedImages[key],
             scale: this.scale,
+            showHitBox: this.showHitbox
+
           })
           break
 
@@ -332,7 +395,9 @@ class MainCharacter {
             image: loadedImages[key],
             scale: this.scale,
             ColRow: { cols: 12, rows: 1 },
-            framesHold: 5
+            framesHold: 5,
+            showHitBox: this.showHitbox
+
 
           })
           break
@@ -353,6 +418,10 @@ class MainCharacter {
     // Handle animation velocity physics stuffs
     this.allAnimations[this.curAnimation].position = this.position
     this.allAnimations[this.curAnimation].flipped = this.flipped
+
+
+
+
     this.draw()
 
   }
@@ -361,19 +430,7 @@ class MainCharacter {
   draw() {
     this.allAnimations[this.curAnimation].update()
 
-    ctx.fillStyle = 'green'
 
-    //ctx.fillRect(0,0,500,500)
-
-    console.log(this.hitBox)
-
-
-    ctx.fillRect(
-      this.hitBox.min_x,
-      this.hitBox.min_y,
-
-      this.hitBox.max_x,
-      this.hitBox.max_y)
   }
 }
 

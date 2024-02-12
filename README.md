@@ -38,6 +38,9 @@ Preloading images as a "promise"
 Background image scaling to game screen
 - [Stackoverflow](https://stackoverflow.com/questions/23104582/scaling-an-image-to-fit-on-canvas)
 
+Sprite animation with matter.js
+- [Stackoverflow](https://stackoverflow.com/questions/65207865/matter-js-is-there-any-way-to-animate-my-sprite)
+
 ### Free Assets
 - [Main Character](https://rvros.itch.io/animated-pixel-hero)
 - [Backgrounds](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)

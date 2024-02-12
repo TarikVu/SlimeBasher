@@ -1,5 +1,3 @@
-
-
 // Note to self, the main point of making this menu is to 
 // have a way for users to select a refresh rate.
 class Button {

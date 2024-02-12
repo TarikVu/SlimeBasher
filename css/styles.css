@@ -24,6 +24,9 @@ canvas {
     display: none;
 }
 
+#coin{
+    display: none;
+}
 
 .background{
     display: none;

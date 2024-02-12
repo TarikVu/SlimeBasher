@@ -74,3 +74,6 @@ players, static sprites could all inherit from sprite sheet.  This way we can be
   the canas dimensions. 
 
   - FramesHold is a rudementary fix for frame animations.  There must be a better method for frame timing and the framerate.
+
+
+[better js practices.](https://www.youtube.com/watch?v=c-1dBd1_G8A)

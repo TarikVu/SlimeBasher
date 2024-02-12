@@ -7,9 +7,6 @@ const ctx = canvas.getContext('2d');
 canvas.width = 1440
 canvas.height = 900
 
-
-
-
 const game = new Game()
 const pauseMenu = new PauseMenu()
 

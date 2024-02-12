@@ -1,3 +1,4 @@
+// OLD///////////////////////////////////////
 // Represents the game world filled with sprites and the backgrounnd.
 // Images are preloaded in as a promise, and then Sprite classes are
 // Invoked with the image object.  The reason for preloading is to be 

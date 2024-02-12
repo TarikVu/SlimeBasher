@@ -35,6 +35,9 @@ Canvas API
 Preloading images as a "promise"
 - [codepen.io](https://codepen.io/isakov/pen/pogvWPY?editors=0010)
 
+Background image scaling to game screen
+- [Stackoverflow](https://stackoverflow.com/questions/23104582/scaling-an-image-to-fit-on-canvas)
+
 ### Free Assets
 - [Main Character](https://rvros.itch.io/animated-pixel-hero)
 - [Backgrounds](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
@@ -77,3 +80,13 @@ players, static sprites could all inherit from sprite sheet.  This way we can be
 
 
 [better js practices.](https://www.youtube.com/watch?v=c-1dBd1_G8A)
+
+
+/////////////////////////// 
+
+refactor
+
+/////////////////////////
+
+- Images:  Since this game is aimed to be ran in a browser (client side) It does not seem possible to utilze [this method with node.js](https://nodejs.org/en/learn/manipulating-files/working-with-folders-in-nodejs) in order to pre load images for my sprites.  Therefore, it seems that I'm now left with two choices:
+  - Add the images for the game in the html file as scripts and load them using getelement by id or I can use the same method of promises. 

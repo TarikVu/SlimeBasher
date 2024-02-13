@@ -14,8 +14,10 @@ export class Slime {
         this.height = 40;
         this.image = document.getElementsByClassName("enemy")[0];
         this.showBodyBox = true;
-        this.flipped = false;
+        this.flipped = true;
 
+        // Create The Slime's sprite &
+        // body for the physics engine.
         this.sprite = new Sprite(
             {
                 image: this.image,
@@ -25,16 +27,18 @@ export class Slime {
                 ColRow: { cols: 8, rows: 3 },
                 framesHold: 18,
                 offset: { x: 10, y: 30 },
-                showDrawBox: true
+               // showDrawBox: true
             }
         );
-
+        
+        // inf inertia keeps ctx.draw consistent /w body
+        // because this disables rotations.
         this.body = Bodies.rectangle(
             position.x,
             position.y,
             this.width,
             this.height,
-            {inertia: Infinity} // keeps ctx.draw consistent w/ body. (disables rotations)
+            {inertia: Infinity} 
         );
 
     }

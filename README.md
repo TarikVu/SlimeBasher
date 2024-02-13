@@ -93,3 +93,8 @@ refactor
 
 - Images:  Since this game is aimed to be ran in a browser (client side) It does not seem possible to utilze [this method with node.js](https://nodejs.org/en/learn/manipulating-files/working-with-folders-in-nodejs) in order to pre load images for my sprites.  Therefore, it seems that I'm now left with two choices:
   - Add the images for the game in the html file as scripts and load them using getelement by id or I can use the same method of promises. 
+
+
+- Drawing Images vs Drawing Bodies w/ matter js.
+- Matter.js rects are drawn from the center, whereas ctx.draw draws a rect / sprite image from the top left 
+  - to fix this whenever an image is being drawn for an object that has a respective body, the ctx.draw will need some padding. 

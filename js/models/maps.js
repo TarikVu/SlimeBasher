@@ -40,7 +40,7 @@ export class Shop {
         //floor
         this.floor = new Tile({
             image: floorImage,
-            position: { x: 475, y: this.height / 2 },
+            position: { x: 0, y: this.height - floorImage.height },
         });
 
         this.tiles.push(this.floor);

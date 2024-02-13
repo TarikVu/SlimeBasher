@@ -3,4 +3,11 @@ export class Player {
         this.game = game
         this.sprites = document.getElementsByClassName('player')
     }
+
+    update(ctrl){
+
+    }
+    draw(){
+
+    }
 }

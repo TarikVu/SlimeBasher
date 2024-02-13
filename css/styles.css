@@ -20,19 +20,21 @@ canvas {
 }
 
 /* Main character animations */
-.player{
+.player {
     display: none;
 }
 
-#coin{
+#coin {
     display: none;
 }
 
-.background{
+.background {
     display: none;
 }
 
-/* Classes (multiple) */
+#grass{
+    display: none;
+}
 .text {
     color: forestgreen;
 }

@@ -37,7 +37,7 @@ export class Game {
         this.map = new Shop(this);
 
         Composite.add(this.world,mouseConstraint)
-        
+
         Render.run(render);
         Runner.run(this.engine);
 
@@ -56,7 +56,7 @@ export class Game {
         this.map.update()
 
    
-        
+    
 
 
     }

@@ -1,7 +1,7 @@
 
 // collections of the maps for the game. 
- import { Slime } from '/js/models/slime.js'
-import { Tile } from '/js/models/tile.js' 
+import { Slime } from '/js/models/slime.js'
+import { Tile } from '/js/models/tile.js'
 
 var Composite = Matter.Composite;
 export class Shop {
@@ -12,7 +12,7 @@ export class Shop {
         this.enemies = [];
         this.tiles = [];
 
-        this.bodies =[];
+        this.bodies = [];
         this.height = game.height;
         this.width = game.width;
         this.world = game.engine.world;
@@ -29,11 +29,18 @@ export class Shop {
         this.enemies.push(this.slime);
         this.bodies.push(this.slime.body);
 
+        this.slime2 = new Slime({
+            position: { x: 550, y: 50 },
+        });
+
+        this.enemies.push(this.slime2);
+        this.bodies.push(this.slime2.body);
+
 
         //floor
         this.floor = new Tile({
             image: floorImage,
-            position: { x: 450, y: this.height/2 },
+            position: { x: 475, y: this.height / 2 },
         });
 
         this.tiles.push(this.floor);
@@ -48,14 +55,17 @@ export class Shop {
 
     update() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        this.slime.update()
+
+
+        for (var e in this.enemies){
+            this.enemies[e].update()
+        }
+
         this.floor.update()
-        this.draw();
+        //this.draw();
     }
 
     draw() {
-        
-
 
     }
 

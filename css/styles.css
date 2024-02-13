@@ -24,17 +24,23 @@ canvas {
     display: none;
 }
 
-#coin {
+.enemy{
+    display: none;
+    
+}
+.background {
     display: none;
 }
 
-.background {
+.text {
+    color: forestgreen;
+}
+
+/* ID's */
+#coin {
     display: none;
 }
 
 #grass{
     display: none;
-}
-.text {
-    color: forestgreen;
 }

@@ -6,15 +6,25 @@ var Bodies = Matter.Bodies
 export class Slime {
     constructor({
         position,
+        debug = true
     }
     ) {
 
-        this.position = position;
         this.width = 80;
         this.height = 40;
+        this.position = position;
+
+        // offset to align ctx and matter drawing
+        this.position.x += this.width/2;
+        this.position.y -= this.height/2;
+
+        
         this.image = document.getElementsByClassName("enemy")[0];
-        this.showBodyBox = true;
         this.flipped = true;
+
+        // Debugging
+        this.debug = debug;
+   
 
         // Create The Slime's sprite &
         // body for the physics engine.
@@ -27,7 +37,7 @@ export class Slime {
                 ColRow: { cols: 8, rows: 3 },
                 framesHold: 18,
                 offset: { x: 10, y: 30 },
-               // showDrawBox: true
+                showDrawBox: this.debug
             }
         );
         
@@ -51,7 +61,7 @@ export class Slime {
         this.sprite.position = this.position
         this.sprite.update();
 
-        if(this.showBodyBox){
+        if(this.debug){
             ctx.fillStyle = "red";
             ctx.globalAlpha = 0.5;
             ctx.fillRect(

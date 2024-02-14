@@ -17,13 +17,11 @@ export class Shop {
         this.width = game.width;
         this.world = game.engine.world;
 
-        const floorImage = document.getElementById("grass");
-
-
+        
 
         //slime
         this.slime = new Slime({
-            position: { x: 150, y: 50 },
+            position: { x: 0, y: 0 },
         });
 
         this.enemies.push(this.slime);
@@ -38,6 +36,7 @@ export class Shop {
 
 
         //floor
+        const floorImage = document.getElementById("grass");
         this.floor = new Tile({
             image: floorImage,
             position: { x: 0, y: this.height - floorImage.height },
@@ -54,9 +53,6 @@ export class Shop {
 
 
     update() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-
         for (var e in this.enemies){
             this.enemies[e].update()
         }

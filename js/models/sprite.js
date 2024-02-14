@@ -14,7 +14,7 @@ export class Sprite {
     ) {
 
         // Error handling
-        if (ColRow.cols < 1 || ColRow.rows < 1 || scale < 0 || position.x < 0 || position.y < 0) {
+        if (ColRow.cols < 1 || ColRow.rows < 1 || scale < 0 ) {
             throw new Error("Invalid Spritesheet parameters.")
         }
 

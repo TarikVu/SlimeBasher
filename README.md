@@ -103,3 +103,5 @@ refactor
 
 
 - [Github pages 404 issue fix](https://stackoverflow.com/questions/11577147/how-to-fix-http-404-on-github-pages) (add .nojekyll)
+
+- [Static bodies need friction to applied after creation](https://github.com/liabru/matter-js/issues/694)

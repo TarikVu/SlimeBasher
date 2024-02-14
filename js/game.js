@@ -44,7 +44,7 @@ export class Game {
     update(ctrl) {
 
         // Draws Bg for now.
-        this.draw();
+       this.draw();
         
         // Updates the current gameworld's map.
         this.map.update()

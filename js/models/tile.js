@@ -1,4 +1,3 @@
-
 // Module aliases
 var Bodies = Matter.Bodies
 
@@ -6,7 +5,7 @@ export class Tile {
     constructor({
         image,
         position,
-        debug = true
+        debug = false
     }
     ) {
         this.image = image;
@@ -15,7 +14,7 @@ export class Tile {
         this.scale = 2;
         this.position = position;
         this.position.x += this.image.width; 
-        this.position.y -= this.image.height; 
+        //this.position.y -= this.image.height; 
 
         this.debug = debug;
 
@@ -34,7 +33,7 @@ export class Tile {
 
     }
 
-    // update position w/ the body position 
+    // Update position w/ the body position 
     // Body position is updated w/ the physics engine.
     update(ctrl) {
 

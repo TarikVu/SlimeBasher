@@ -9,17 +9,16 @@ import { Bounds } from '/js/models/bounds.js'
 var Composite = Matter.Composite,
     Bodies = Matter.Bodies
 export class Shop {
-    constructor(game) {
-
-        //this.background = document.getElementsByClassName('background')[0];
+    constructor(game,player) {
 
         this.background = document.getElementsByClassName('field');
+        this.player = player;
 
         this.sprites = [];
         this.enemies = [];
         this.tiles = [];
-
         this.bodies = [];
+
         this.height = game.height;
         this.width = game.width;
         this.world = game.engine.world;
@@ -75,23 +74,27 @@ export class Shop {
 
     drawBG(ctrl) {
 
-        console.log(ctrl.mouse.x, ctrl.mouse.y)
-
         for (var img of this.background) {
 
+            // Parallax effect 
             var move_val = img.getAttribute('data-value');
+            var x = ctrl.mouse.x * move_val / 700
+            var y = ctrl.mouse.y * move_val / 1700
 
-            var x = ctrl.mouse.x  * move_val / 700
-            var y = ctrl.mouse.y  * move_val / 1700
-
-
-            ctx.drawImage(img, x - 100, y, this.width + 150, this.height - 55);
+            // Draw the image slightly larger than screen
+            // and offset to the left in order to acc for parallax.
+            ctx.drawImage(img,
+                x - 100, // offset
+                y,
+                this.width + 150,  // slightly bigger
+                this.height - 55); // adjust for floor sprite
 
         }
     }
     update(ctrl) {
 
         this.drawBG(ctrl);
+
 
         for (var e in this.enemies) {
             this.enemies[e].update()
@@ -100,6 +103,8 @@ export class Shop {
         for (var t in this.tiles) {
             this.tiles[t].update();
         }
+
+        this.player.update(ctrl);
 
 
 

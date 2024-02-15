@@ -12,7 +12,7 @@ export class Shop {
     constructor(game) {
 
         this.background = document.getElementsByClassName('background')[0];
-        this.sprites = {};
+        this.sprites = [];
         this.enemies = [];
         this.tiles = [];
 
@@ -21,7 +21,6 @@ export class Shop {
         this.width = game.width;
         this.world = game.engine.world;
         this.bounds = new Bounds(this.width,this.height);
-
 
         //slime
         this.slime = new Slime({
@@ -46,18 +45,18 @@ export class Shop {
             position: { x: 0, y: this.height - floorImage.height },
         });
 
-        this.tiles.push(this.floor);
-        this.bodies.push(this.floor.body);
 
-      
+        // Add Sprites to be updated
+        this.tiles.push(this.floor);
+
+        // Add to all bodies to be updated
+        this.bodies.push(this.floor.body);
         this.bodies.push(this.bounds.wallTop);
         this.bodies.push(this.bounds.wallBot);
         this.bodies.push(this.bounds.wallLeft);
         this.bodies.push(this.bounds.wallRight);
 
-
-
-        // Add the bodies to engine
+        // Add the bodies to Matter.js engine
         Composite.add(this.world, this.bodies);
     }
 
@@ -67,7 +66,10 @@ export class Shop {
             this.enemies[e].update()
         }
 
-        this.floor.draw();
+        for (var t in this.tiles){
+            this.tiles[t].update();
+        }
+      
 
         //this.draw();
     }

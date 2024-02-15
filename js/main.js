@@ -8,8 +8,8 @@ window.addEventListener('load', function () {
 
 
     // Set up game screen
-    canvas.width = 1440;
-    canvas.height = 900; //900
+    canvas.width = 1600; //1440
+    canvas.height = 1200; //900
 
 
     const ctrl = new Controller();

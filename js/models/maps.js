@@ -11,7 +11,10 @@ var Composite = Matter.Composite,
 export class Shop {
     constructor(game) {
 
-        this.background = document.getElementsByClassName('background')[0];
+        //this.background = document.getElementsByClassName('background')[0];
+
+        this.background = document.getElementsByClassName('field');
+
         this.sprites = [];
         this.enemies = [];
         this.tiles = [];
@@ -20,7 +23,7 @@ export class Shop {
         this.height = game.height;
         this.width = game.width;
         this.world = game.engine.world;
-        this.bounds = new Bounds(this.width,this.height);
+        this.bounds = new Bounds(this.width, this.height);
 
         //slime
         this.slime = new Slime({
@@ -40,17 +43,25 @@ export class Shop {
 
         //floor
         const floorImage = document.getElementById("grass");
+
         this.floor = new Tile({
             image: floorImage,
             position: { x: 0, y: this.height - floorImage.height },
+        });
+        this.floor2 = new Tile({
+            image: floorImage,
+            position: { x: this.width / 2, y: this.height - floorImage.height },
         });
 
 
         // Add Sprites to be updated
         this.tiles.push(this.floor);
+        this.tiles.push(this.floor2);
 
         // Add to all bodies to be updated
         this.bodies.push(this.floor.body);
+        this.bodies.push(this.floor2.body);
+
         this.bodies.push(this.bounds.wallTop);
         this.bodies.push(this.bounds.wallBot);
         this.bodies.push(this.bounds.wallLeft);
@@ -61,19 +72,38 @@ export class Shop {
     }
 
 
-    update() {
+
+    drawBG(ctrl) {
+
+        console.log(ctrl.mouse.x, ctrl.mouse.y)
+
+        for (var img of this.background) {
+
+            var move_val = img.getAttribute('data-value');
+
+            var x = ctrl.mouse.x  * move_val / 700
+            var y = ctrl.mouse.y  * move_val / 1700
+
+
+            ctx.drawImage(img, x - 100, y, this.width + 150, this.height - 55);
+
+        }
+    }
+    update(ctrl) {
+
+        this.drawBG(ctrl);
+
         for (var e in this.enemies) {
             this.enemies[e].update()
         }
 
-        for (var t in this.tiles){
+        for (var t in this.tiles) {
             this.tiles[t].update();
         }
-      
 
-        //this.draw();
+
+
     }
 
-    draw() {
-    }
+
 }

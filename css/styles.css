@@ -24,11 +24,16 @@ canvas {
     display: none;
 }
 
-.enemy{
+.enemy {
     display: none;
-    
+
 }
+
 .background {
+    display: none;
+}
+
+.field {
     display: none;
 }
 
@@ -36,11 +41,13 @@ canvas {
     color: forestgreen;
 }
 
+
+
 /* ID's */
 #coin {
     display: none;
 }
 
-#grass{
+#grass {
     display: none;
 }

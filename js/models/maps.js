@@ -79,13 +79,14 @@ export class Shop {
             // Parallax effect 
             var move_val = img.getAttribute('data-value');
             var x = ctrl.mouse.x * move_val / 700
-            var y = ctrl.mouse.y * move_val / 1700
+            //var y = ctrl.mouse.y * move_val / 2000
 
             // Draw the image slightly larger than screen
             // and offset to the left in order to acc for parallax.
             ctx.drawImage(img,
                 x - 100, // offset
-                y,
+                //y,
+                0,
                 this.width + 150,  // slightly bigger
                 this.height - 55); // adjust for floor sprite
 

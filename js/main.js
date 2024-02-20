@@ -12,8 +12,11 @@ window.addEventListener('load', function () {
     this.window.ctx = canvas.getContext('2d');
 
     // Set up game screen
-    canvas.width = 1600;
-    canvas.height = 1200;
+    /* canvas.width = 1600;
+    canvas.height = 1200; */
+    
+     canvas.width = 1200;
+    canvas.height = 900; 
 
     const engine = Matter.Engine.create();
 

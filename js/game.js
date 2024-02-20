@@ -31,7 +31,10 @@ export class Game {
         this.engine = engine;
         this.world = this.engine.world;
 
-        this.player = new Player();
+        this.player = new Player({
+            position: { x: 200, y: 100 },
+        });
+
         this.ctrl = new Controller();
         this.map = new Shop(this, this.player);
 
@@ -46,7 +49,7 @@ export class Game {
         // Set the FPS and delta ( timestep ) according to the fps option.
         this.runner = Runner.create({
             fps: this.fps,
-            isFixed: true,
+            isFixed: false,
             delta: 1000 / this.fps,
         });
 
@@ -61,12 +64,9 @@ export class Game {
         }
 
 
-
         // this.runner.run(this.engine);
         Runner.run(this.runner, this.engine)
     }
-
-
 
 
 

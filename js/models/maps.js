@@ -14,10 +14,12 @@ export class Shop {
         this.background = document.getElementsByClassName('field');
         this.player = player;
 
+
         this.sprites = [];
         this.enemies = [];
         this.tiles = [];
         this.bodies = [];
+        this.bodies.push(this.player.body);
 
         this.height = game.height;
         this.width = game.width;

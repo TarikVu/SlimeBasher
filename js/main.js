@@ -17,42 +17,50 @@ window.addEventListener('load', function () {
 
     const engine = Matter.Engine.create();
 
-    const game = new Game({
-        engine: engine,
-        width: canvas.width,
-        height: canvas.height
+
+
+    // Function that returns a Promise for the FPS
+    const getFPS = () =>
+        new Promise(resolve =>
+            requestAnimationFrame(t1 =>
+                requestAnimationFrame(t2 => resolve(1000 / (t2 - t1)))
+            )
+        )
+
+
+    var FPS = 0;
+
+    // Detect monitor Hz then create game using either
+    // 60 fps or 144 fps.
+    getFPS().then(result => {
+        if (result < 120) {
+            FPS = 60
+        }
+        else {
+            FPS = 144
+        }
+
+        const game = new Game({
+            engine: engine,
+            fps: FPS,
+            width: canvas.width,
+            height: canvas.height
+        });
+
+        ctx.imageSmoothingEnabled = false;
+
+
+        animate();
+
+
+        // Starts the game
+        function animate() {
+            game.update();
+            requestAnimationFrame(animate);
+        }
+
+
     });
-
-    ctx.imageSmoothingEnabled = false;
-
-
-    animate();
-
-
-   // Starts the game
-   function animate() {
-       game.update();
-       requestAnimationFrame(animate);
-   }
-
-
-  /*   let isRunning = true;
-    let lastUpdate = performance.now();
-    const fixedDelta = 1000 / 144;
-    const runnerFunc = () => {
-        const now = performance.now();
-
-        while (progress < now) {
-            Matter.Engine.update(engine, fixedDelta);
-            lastUpdate += fixedDelta;
-        }
-
-        if (isRunning) {
-            requestAnimationFrame(runnerFunc);
-        }
-    }
-    requestAnimationFrame(runnerFunc);
- */
 
 })
 

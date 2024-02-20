@@ -18,6 +18,7 @@ export class Game {
     constructor(
         {
             engine,
+            fps,
             width,
             height
         }
@@ -32,7 +33,7 @@ export class Game {
 
         this.player = new Player();
         this.ctrl = new Controller();
-        this.map = new Shop(this,this.player);
+        this.map = new Shop(this, this.player);
 
         // Add to move the sprites w/ the mouse (for now)
         const mouseConstraint = Matter.MouseConstraint.create(
@@ -40,11 +41,29 @@ export class Game {
         );
         Composite.add(this.world, mouseConstraint)
 
+        this.fps = fps;
 
-        // Run the physics engine for the game
-        this.runner = Runner.create({fps:144});
-       // this.runner.run(this.engine);
-        Runner.run(this.engine)
+        // Set the FPS and delta ( timestep ) according to the fps option.
+        this.runner = Runner.create({
+            fps: this.fps,
+            isFixed: true,
+            delta: 1000 / this.fps,
+        });
+
+        // Adjust gravity to match timestep speed,
+        // This helps normalize the physics engines on different refresh rates.
+        // IMPORTANT**** THIS WAY OF scaling for delta may need to be applied for velocity of movement
+        // and other logic as well.
+        if (this.fps == 60) {
+            this.engine.gravity.scale = 0.01
+        } else {
+            this.engine.gravity.scale = 0.0075
+        }
+
+
+
+        // this.runner.run(this.engine);
+        Runner.run(this.runner, this.engine)
     }
 
 
@@ -56,7 +75,7 @@ export class Game {
 
         // Updates the current gameworld's map.
         this.map.update(this.ctrl);
-        
+
     }
 
 

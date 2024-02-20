@@ -17,6 +17,7 @@ var Engine = Matter.Engine,
 export class Game {
     constructor(
         {
+            engine,
             width,
             height
         }
@@ -26,7 +27,7 @@ export class Game {
         this.height = height;
 
         // Set up physics and Game world
-        this.engine = Engine.create();
+        this.engine = engine;
         this.world = this.engine.world;
 
         this.player = new Player();
@@ -41,7 +42,9 @@ export class Game {
 
 
         // Run the physics engine for the game
-        Runner.run(this.engine);
+        this.runner = Runner.create({fps:144});
+       // this.runner.run(this.engine);
+        Runner.run(this.engine)
     }
 
 

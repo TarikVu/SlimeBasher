@@ -10,7 +10,8 @@ export class Player {
         {
             position,
             debug = true,
-            flipped = false
+            flipped = false,
+            gravity
         }
     ) {
 
@@ -18,7 +19,9 @@ export class Player {
         this.bodyHeight = 135;
 
         this.position = position;
-        this.flipped = false;
+        this.velocity = 12;
+        this.flipped = flipped;
+        this.gravity = gravity;
 
         var images = document.getElementsByClassName('player')
         this.debug = debug;
@@ -35,7 +38,8 @@ export class Player {
             {
                 inertia: Infinity,
                 restitution: 0,
-                friction: 1
+                friction: 1,
+                frictionAir: .04
             });
 
         // Create and add a new sprite per image
@@ -56,25 +60,59 @@ export class Player {
     }
 
     setState(stateID) {
+
+
         this.currentState = this.states[stateID];
         this.currentSprite = this.sprites[stateID];
+
+
 
     }
 
 
     update(ctrl) {
 
-        /* if (ctrl.keys === undefined || ctrl.keys.length == 0) {
+        if (ctrl.keys === undefined || ctrl.keys.length == 0) {
             this.setState(IDLE);
         }
-        if (ctrl.keys === 'd') {
+
+        if (ctrl.keys == 'w') {
+            this.setState(IDLE);
+            this.flipped = false;
+            Matter.Body.setVelocity(
+                this.body,
+                { x: 0, y: 20 * -1 }
+            );
+            console.log(this.gravity);
+
+        }
+
+        if (ctrl.keys == 'd') {
             this.setState(RUNNING);
-        }*/
+            this.flipped = false;
+  
+            Matter.Body.setVelocity(
+                this.body,
+                { x: this.velocity, y:15 }
+            );
+
+        }
+
+        if (ctrl.keys == 'a') {
+            this.setState(RUNNING, true);
+            this.flipped = true;
+            Matter.Body.setVelocity(
+                this.body,
+                { x: this.velocity * -1, y: this.gravity.y }
+            );
+
+        }
 
         this.position = this.body.vertices[0];
         this.currentSprite.position.y = this.position.y - 145;
         this.currentSprite.position.x = this.position.x - 150;
 
+        this.currentSprite.flipped = this.flipped;
         this.currentSprite.update();
 
         if (this.debug) {

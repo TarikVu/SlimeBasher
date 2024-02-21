@@ -108,3 +108,5 @@ refactor
 
 
 - [Detecting monitor hz](https://stackoverflow.com/questions/6131051/is-it-possible-to-find-out-what-is-the-monitor-frame-rate-in-javascript)
+
+/// Bugs Sometimes the game loads before the fps is correctly calcuated. resulting in incorrect game settings.

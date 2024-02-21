@@ -32,6 +32,7 @@ export class Game {
         this.world = this.engine.world;
 
         this.player = new Player({
+            gravity:this.engine.gravity,
             position: { x: 200, y: 100 },
         });
 

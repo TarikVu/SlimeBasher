@@ -46,22 +46,23 @@ export class Shop {
         const floorImage = document.getElementById("grass");
 
         this.floor = new Tile({
+            debug:true,
             image: floorImage,
             position: { x: 0, y: this.height - floorImage.height },
         });
-        this.floor2 = new Tile({
+       /*  this.floor2 = new Tile({
             image: floorImage,
             position: { x: this.width / 2, y: this.height - floorImage.height },
-        });
+        }); */
 
 
         // Add Sprites to be updated
         this.tiles.push(this.floor);
-        this.tiles.push(this.floor2);
+       // this.tiles.push(this.floor2);
 
         // Add to all bodies to be updated
         this.bodies.push(this.floor.body);
-        this.bodies.push(this.floor2.body);
+       // this.bodies.push(this.floor2.body);
 
         this.bodies.push(this.bounds.wallTop);
         this.bodies.push(this.bounds.wallBot);

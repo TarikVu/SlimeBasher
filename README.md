@@ -1,5 +1,5 @@
-# Deepwood (Pre-Alpha)
-Deepwood is a basic game composed of HTML5, CANVAS, and JavaScript.
+# Slime Basher (Pre-Alpha)
+Slime Basher is a basic game composed of HTML5, CANVAS, and JavaScript.
 for an in-depth look at my implementation please check out the [Wiki page here](https://github.com/TarikVu/Deepwood/wiki).
 
 ## Table of Contents
@@ -34,6 +34,12 @@ Canvas API
 
 Preloading images as a "promise"
 - [codepen.io](https://codepen.io/isakov/pen/pogvWPY?editors=0010)
+
+Background image scaling to game screen
+- [Stackoverflow](https://stackoverflow.com/questions/23104582/scaling-an-image-to-fit-on-canvas)
+
+Sprite animation with matter.js
+- [Stackoverflow](https://stackoverflow.com/questions/65207865/matter-js-is-there-any-way-to-animate-my-sprite)
 
 ### Free Assets
 - [Main Character](https://rvros.itch.io/animated-pixel-hero)
@@ -77,3 +83,30 @@ players, static sprites could all inherit from sprite sheet.  This way we can be
 
 
 [better js practices.](https://www.youtube.com/watch?v=c-1dBd1_G8A)
+
+
+/////////////////////////// 
+
+refactor
+
+/////////////////////////
+
+- Images:  Since this game is aimed to be ran in a browser (client side) It does not seem possible to utilze [this method with node.js](https://nodejs.org/en/learn/manipulating-files/working-with-folders-in-nodejs) in order to pre load images for my sprites.  Therefore, it seems that I'm now left with two choices:
+  - Add the images for the game in the html file as scripts and load them using getelement by id or I can use the same method of promises. 
+
+
+- Drawing Images vs Drawing Bodies w/ matter js.
+- Matter.js rects are drawn from the center, whereas ctx.draw draws a rect / sprite image from the top left 
+  - to fix this whenever an image is being drawn for an object that has a respective body, the ctx.draw will need some padding. 
+
+- Now that that code base for main has been switched to javascript [modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), the code base is now subject to the [CORS Policy](https://stackoverflow.com/questions/52919331/access-to-script-at-from-origin-null-has-been-blocked-by-cors-policy).  Pros include being able to utilze keyterms such as "Export" and "Import" to better track the scripts.  However this limits being able to use the html file without needing to be be hosted on a server. 
+
+
+- [Github pages 404 issue fix](https://stackoverflow.com/questions/11577147/how-to-fix-http-404-on-github-pages) (add .nojekyll)
+
+- [Static bodies need friction to applied after creation](https://github.com/liabru/matter-js/issues/694)
+
+
+- [Detecting monitor hz](https://stackoverflow.com/questions/6131051/is-it-possible-to-find-out-what-is-the-monitor-frame-rate-in-javascript)
+
+/// Bugs Sometimes the game loads before the fps is correctly calcuated. resulting in incorrect game settings.

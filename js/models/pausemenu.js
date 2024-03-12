@@ -1,5 +1,3 @@
-
-
 // Note to self, the main point of making this menu is to 
 // have a way for users to select a refresh rate.
 class Button {
@@ -137,7 +135,7 @@ class Checkbox {
 
 // Pause menu screen.
 // Image pre-loading follows the same logic as spritesheet
-class PauseMenu {
+export class PauseMenu {
     constructor() {
 
         // Const values for styling the UI

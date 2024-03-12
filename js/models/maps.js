@@ -59,11 +59,10 @@ export class Shop {
         const floorImage = document.getElementById("grass");
 
         this.floor = new Tile({
-            debug: true,
             image: floorImage,
             position: { x: 0, y: this.height - floorImage.height },
         });
-        
+
         // Add Sprites to be updated
         this.tiles.push(this.floor);
         // this.tiles.push(this.floor2);
@@ -92,7 +91,9 @@ export class Shop {
 
             // Parallax effect 
             var move_val = img.getAttribute('data-value');
-            var x = ctrl.mouse.x * move_val / 700
+            //var x = ctrl.mouse.x * move_val / 700
+            var x = this.player.position.x * move_val / 700
+
             //var y = ctrl.mouse.y * move_val / 2000
 
             // Draw the image slightly larger than screen

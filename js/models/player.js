@@ -64,31 +64,34 @@ export class Player {
 
 
     update(ctrl) {
+        console.log(ctrl);
 
         if (ctrl.keys === undefined || ctrl.keys.length == 0) {
             this.setState(IDLE);
         }
 
-        if (ctrl.keys == 'w') {
+        if (ctrl.keys == 'a' && ctrl.keys == 'd' ) {
+            console.log("HEre");
+            this.setState(IDLE, true);
+        }
+
+
+       /*  if (ctrl.keys == 'w') {
             this.setState(IDLE);
             this.flipped = false;
             Matter.Body.setVelocity(
                 this.body,
                 { x: 0, y: 20 * -1 }
             );
-            console.log(this.gravity);
-
         }
-
+ */
         if (ctrl.keys == 'd') {
             this.setState(RUNNING);
-
             this.flipped = false;
-
 
             Matter.Body.setVelocity(
                 this.body,
-                { x: this.velocity, y: 15 }
+                { x: this.velocity, y:0 }
             );
 
         }
@@ -99,10 +102,12 @@ export class Player {
 
             Matter.Body.setVelocity(
                 this.body,
-                { x: this.velocity * -1, y: this.gravity.y }
+                { x: this.velocity * -1, y:0}
             );
 
         }
+
+       
 
         // Position the spirte in the correct place 
         // relative to the body.  

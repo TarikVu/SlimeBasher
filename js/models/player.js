@@ -9,7 +9,7 @@ export class Player {
     constructor(
         {
             position,
-            debug = true,
+            debug = false,
             flipped = false,
             gravity
         }
@@ -55,18 +55,11 @@ export class Player {
 
         this.currentState = this.states[0];
         this.currentSprite = this.sprites[0];
-
-
     }
 
     setState(stateID) {
-
-
         this.currentState = this.states[stateID];
         this.currentSprite = this.sprites[stateID];
-
-
-
     }
 
 
@@ -89,11 +82,13 @@ export class Player {
 
         if (ctrl.keys == 'd') {
             this.setState(RUNNING);
+
             this.flipped = false;
-  
+
+
             Matter.Body.setVelocity(
                 this.body,
-                { x: this.velocity, y:15 }
+                { x: this.velocity, y: 15 }
             );
 
         }
@@ -101,6 +96,7 @@ export class Player {
         if (ctrl.keys == 'a') {
             this.setState(RUNNING, true);
             this.flipped = true;
+
             Matter.Body.setVelocity(
                 this.body,
                 { x: this.velocity * -1, y: this.gravity.y }
@@ -108,10 +104,18 @@ export class Player {
 
         }
 
+        // Position the spirte in the correct place 
+        // relative to the body.  
         this.position = this.body.vertices[0];
-        this.currentSprite.position.y = this.position.y - 145;
-        this.currentSprite.position.x = this.position.x - 150;
 
+        this.currentSprite.position.y = this.position.y - 145;
+
+        if (this.flipped) {
+            this.currentSprite.position.x = this.position.x - 185;
+        }
+        else {
+            this.currentSprite.position.x = this.position.x - 150;
+        }
         this.currentSprite.flipped = this.flipped;
         this.currentSprite.update();
 

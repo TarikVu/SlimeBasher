@@ -51,7 +51,8 @@ export class Slime {
             {
                 inertia: Infinity,
                 restitution: 0.35,
-                friction: 0.005
+                friction: 0.005,
+                chamfer:5
             }
         );
 

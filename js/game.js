@@ -65,7 +65,6 @@ export class Game {
         }
 
 
-        // this.runner.run(this.engine);
         Runner.run(this.runner, this.engine)
     }
 
@@ -73,10 +72,8 @@ export class Game {
 
     // Looped from main
     update() {
-
         // Updates the current gameworld's map.
         this.map.update(this.ctrl);
-
     }
 
 

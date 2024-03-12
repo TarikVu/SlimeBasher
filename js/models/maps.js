@@ -7,9 +7,22 @@ import { Bounds } from '/js/models/bounds.js'
 
 
 var Composite = Matter.Composite,
-    Bodies = Matter.Bodies
+    Bodies = Matter.Bodies,
+
+    Engine = Matter.Engine,
+    Events = Matter.Events,
+    Render = Matter.Render,
+    Runner = Matter.Runner,
+    Body = Matter.Body,
+    Composites = Matter.Composites,
+    Constraint = Matter.Constraint,
+    MouseConstraint = Matter.MouseConstraint,
+    Mouse = Matter.Mouse,
+    Bodies = Matter.Bodies,
+    Vector = Matter.Vector;
+
 export class Shop {
-    constructor(game,player) {
+    constructor(game, player) {
 
         this.background = document.getElementsByClassName('field');
         this.player = player;
@@ -46,31 +59,29 @@ export class Shop {
         const floorImage = document.getElementById("grass");
 
         this.floor = new Tile({
-            debug:true,
+            debug: true,
             image: floorImage,
             position: { x: 0, y: this.height - floorImage.height },
         });
-       /*  this.floor2 = new Tile({
-            image: floorImage,
-            position: { x: this.width / 2, y: this.height - floorImage.height },
-        }); */
-
-
+        
         // Add Sprites to be updated
         this.tiles.push(this.floor);
-       // this.tiles.push(this.floor2);
+        // this.tiles.push(this.floor2);
 
         // Add to all bodies to be updated
         this.bodies.push(this.floor.body);
-       // this.bodies.push(this.floor2.body);
+        // this.bodies.push(this.floor2.body);
 
         this.bodies.push(this.bounds.wallTop);
         this.bodies.push(this.bounds.wallBot);
         this.bodies.push(this.bounds.wallLeft);
         this.bodies.push(this.bounds.wallRight);
 
+
         // Add the bodies to Matter.js engine
         Composite.add(this.world, this.bodies);
+
+
     }
 
 
@@ -109,8 +120,6 @@ export class Shop {
         }
 
         this.player.update(ctrl);
-
-
 
     }
 

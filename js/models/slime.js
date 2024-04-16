@@ -6,12 +6,12 @@ var Bodies = Matter.Bodies
 export class Slime {
     constructor({
         position,
-        debug = false
+        debug = true
     }
     ) {
 
         this.width = 80;
-        this.height = 40;
+        this.height = 50;
         this.position = position;
 
         // offset to align ctx and matter drawing

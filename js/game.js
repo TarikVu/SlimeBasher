@@ -72,8 +72,10 @@ export class Game {
 
     // Looped from main
     update() {
+
         // Updates the current gameworld's map.
         this.map.update(this.ctrl);
+    
     }
 
 

@@ -2,14 +2,15 @@ import { Sprite } from './sprite.js'
 var Bodies = Matter.Bodies
 
 const IDLE = 0,
-    RUNNING = 1
+    RUNNING = 1,
+    ATTACKING = 2
 
 
 export class Player {
     constructor(
         {
             position,
-            debug = false,
+            debug = true,
             flipped = false,
             gravity
         }
@@ -26,7 +27,7 @@ export class Player {
         var images = document.getElementsByClassName('player')
         this.debug = debug;
 
-        this.states = [IDLE, RUNNING];
+        this.states = [IDLE, RUNNING, ATTACKING];
         this.sprites = [];
 
 
@@ -71,7 +72,7 @@ export class Player {
         }
 
         if (ctrl.keys == 'a' && ctrl.keys == 'd' ) {
-            console.log("HEre");
+            
             this.setState(IDLE, true);
         }
 
@@ -84,7 +85,14 @@ export class Player {
                 { x: 0, y: 20 * -1 }
             );
         }
+        
  */
+
+        // use of includes makes for smoother gameplay
+        if (ctrl.keys.includes(' ')) {
+            this.setState(ATTACKING); 
+        }
+
         if (ctrl.keys == 'd') {
             this.setState(RUNNING);
             this.flipped = false;
@@ -106,6 +114,8 @@ export class Player {
             );
 
         }
+
+        
 
        
 

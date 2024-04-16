@@ -85,7 +85,7 @@ export class Shop {
 
 
 
-    drawBG(ctrl) {
+    drawBG() {
 
         for (var img of this.background) {
 
@@ -107,10 +107,10 @@ export class Shop {
 
         }
     }
+
     update(ctrl) {
 
-        this.drawBG(ctrl);
-
+        this.drawBG();
 
         for (var e in this.enemies) {
             this.enemies[e].update()

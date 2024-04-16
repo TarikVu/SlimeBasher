@@ -24,6 +24,7 @@ export class Player {
         this.flipped = flipped;
         this.gravity = gravity;
 
+
         var images = document.getElementsByClassName('player')
         this.debug = debug;
 
@@ -56,6 +57,21 @@ export class Player {
 
         this.currentState = this.states[0];
         this.currentSprite = this.sprites[0];
+
+        
+        // Attack box coordinates relative to sprite 
+        this.attackBox = {
+            position:this.currentSprite.position,
+            height: 100,
+            width: 200
+        }
+        
+        /* [
+            {x:this.currentSprite.position.x, y:this.currentSprite.position.y},// Top Left
+            {x:this.currentSprite.position.x+100, y:this.currentSprite.position.y}, // Top Right
+            {x:this.currentSprite.position.x, y:this.currentSprite.position.y-100}, // Bot Left
+            {x:this.currentSprite.position.x+100, y:this.currentSprite.position.y-100}] // Bot Right */
+        
     }
 
     setState(stateID) {
@@ -142,6 +158,16 @@ export class Player {
                 this.position.y,
                 this.bodyWidth,
                 this.bodyHeight,
+            );
+            ctx.globalAlpha = 1.0;
+
+            ctx.fillStyle = "blue";
+            ctx.globalAlpha = 0.5;
+            ctx.fillRect(
+                this.attackBox.position.x,
+                this.attackBox.position.y,
+                this.attackBox.width,
+                this.attackBox.height,
             );
             ctx.globalAlpha = 1.0;
 

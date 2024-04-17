@@ -4,7 +4,9 @@ import { Slime } from '/js/models/slime.js'
 import { Tile } from '/js/models/tile.js'
 import { Bounds } from '/js/models/bounds.js'
 
-
+const IDLE = 0,
+    RUNNING = 1,
+    ATTACKING = 2
 
 var Composite = Matter.Composite,
     Bodies = Matter.Bodies,
@@ -122,6 +124,24 @@ export class Shop {
 
         this.player.update(ctrl);
 
+        // Collision detection w/ player in the attacking state
+
+        if (this.player.currentState == ATTACKING) {
+            console.log("attacking");
+
+            this.enemies.forEach((element) => {
+                if (this.collision(this.player, element)) {
+
+                }
+                else {
+                    console.log("Nothing was hit");
+                }
+            })
+        }
+    }
+
+    collision(attackBox, slime) {
+        return false;
     }
 
 

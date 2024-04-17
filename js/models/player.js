@@ -62,8 +62,8 @@ export class Player {
         // Attack box coordinates relative to sprite 
         this.attackBox = {
             position: this.currentSprite.position,
-            height: 100,
-            width: 200
+            height: this.bodyHeight,
+            width: 265
         }
 
         /* [
@@ -151,8 +151,15 @@ export class Player {
         this.currentSprite.flipped = this.flipped;
         this.currentSprite.update();
 
-        this.attackBox.position.x = this.position.x;
+        // Update the position of the Attackbox 
         this.attackBox.position.y = this.position.y;
+        if (this.flipped) {
+            this.attackBox.position.x = this.currentSprite.position.x;
+        }
+        else {
+            this.attackBox.position.x = this.currentSprite.position.x + 150;
+        }
+
 
         // Draw the matter body and atk box
         if (this.debug) {

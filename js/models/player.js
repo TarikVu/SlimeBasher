@@ -58,20 +58,20 @@ export class Player {
         this.currentState = this.states[0];
         this.currentSprite = this.sprites[0];
 
-        
+
         // Attack box coordinates relative to sprite 
         this.attackBox = {
-            position:this.currentSprite.position,
+            position: this.currentSprite.position,
             height: 100,
             width: 200
         }
-        
+
         /* [
             {x:this.currentSprite.position.x, y:this.currentSprite.position.y},// Top Left
             {x:this.currentSprite.position.x+100, y:this.currentSprite.position.y}, // Top Right
             {x:this.currentSprite.position.x, y:this.currentSprite.position.y-100}, // Bot Left
             {x:this.currentSprite.position.x+100, y:this.currentSprite.position.y-100}] // Bot Right */
-        
+
     }
 
     setState(stateID) {
@@ -87,26 +87,26 @@ export class Player {
             this.setState(IDLE);
         }
 
-        if (ctrl.keys == 'a' && ctrl.keys == 'd' ) {
-            
+        if (ctrl.keys == 'a' && ctrl.keys == 'd') {
+
             this.setState(IDLE, true);
         }
 
 
-       /*  if (ctrl.keys == 'w') {
-            this.setState(IDLE);
-            this.flipped = false;
-            Matter.Body.setVelocity(
-                this.body,
-                { x: 0, y: 20 * -1 }
-            );
-        }
-        
- */
+        /*  if (ctrl.keys == 'w') {
+             this.setState(IDLE);
+             this.flipped = false;
+             Matter.Body.setVelocity(
+                 this.body,
+                 { x: 0, y: 20 * -1 }
+             );
+         }
+         
+  */
 
         // use of includes makes for smoother gameplay
         if (ctrl.keys.includes(' ')) {
-            this.setState(ATTACKING); 
+            this.setState(ATTACKING);
         }
 
         if (ctrl.keys == 'd') {
@@ -115,7 +115,7 @@ export class Player {
 
             Matter.Body.setVelocity(
                 this.body,
-                { x: this.velocity, y:0 }
+                { x: this.velocity, y: 0 }
             );
 
         }
@@ -126,18 +126,19 @@ export class Player {
 
             Matter.Body.setVelocity(
                 this.body,
-                { x: this.velocity * -1, y:0}
+                { x: this.velocity * -1, y: 0 }
             );
 
         }
 
-        
 
-       
+
+
 
         // Position the spirte in the correct place 
         // relative to the body.  
         this.position = this.body.vertices[0];
+
 
         this.currentSprite.position.y = this.position.y - 145;
 
@@ -150,6 +151,10 @@ export class Player {
         this.currentSprite.flipped = this.flipped;
         this.currentSprite.update();
 
+        this.attackBox.position.x = this.position.x;
+        this.attackBox.position.y = this.position.y;
+
+        // Draw the matter body and atk box
         if (this.debug) {
             ctx.fillStyle = "red";
             ctx.globalAlpha = 0.5;

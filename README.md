@@ -15,7 +15,7 @@ for an in-depth look at my implementation please check out the [Wiki page here](
 
 
 ## <a name="design"></a> Design
-![diagram](https://cdn.discordapp.com/attachments/1204513288214413352/1204513303695458435/deepwood.PNG?ex=65d5016e&is=65c28c6e&hm=f685046994b119c3fcd3e8721f9da9345e6a1b0b1cf4dad3ec1606a95f07241d&)
+![diagram](https://github.com/TarikVu/imgs/blob/main/SlimeBasher/slimebasher_diagram.PNG?raw=true)
 
 ## <a name="pfeats"></a> Planned Features
 - [ ] Animation cycles adapt to monitor refresh rate

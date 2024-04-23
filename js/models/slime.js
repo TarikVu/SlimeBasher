@@ -6,7 +6,7 @@ var Bodies = Matter.Bodies
 export class Slime {
     constructor({
         position,
-        debug = false
+        debug = true
     }
     ) {
 

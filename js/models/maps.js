@@ -43,19 +43,19 @@ export class Shop {
 
         //slime
         this.slime = new Slime({
-            position: { x: 0, y: 0 },
+            position: { x: 450, y: 150 },
         });
 
         this.enemies.push(this.slime);
         this.bodies.push(this.slime.body);
 
-        this.slime2 = new Slime({
+       /*  this.slime2 = new Slime({
             position: { x: 550, y: 50 },
         });
 
         this.enemies.push(this.slime2);
         this.bodies.push(this.slime2.body);
-
+ */
 
         //floor
         const floorImage = document.getElementById("grass");
@@ -116,6 +116,25 @@ export class Shop {
 
         for (var e in this.enemies) {
             this.enemies[e].update()
+
+            // Respawn the enemy when knocked out of bounds.
+            //console.log(this.bounds);
+            console.log(this.enemies[e].position);
+             if(this.enemies[e].position.x > this.bounds.width || this.enemies[e].position.x < -5){
+
+                this.enemies[e].position.x = 450;
+                this.enemies[e].position.y = 450;
+                this.enemies[e].body.position.x = 450;
+                this.enemies[e].body.position.y = 450; 
+ 
+
+            }
+/*
+            if(this.enemies[e].position.y > this.bounds.height || this.enemies[e].position.y < 0){
+                this.enemies[e].position.x = 50;
+                this.enemies[e].position.y = 50;
+            } */
+
         }
 
         for (var t in this.tiles) {
@@ -133,7 +152,7 @@ export class Shop {
                 if (this.collision(this.player.attackBox, element)) {
                     console.log("ENEMY HIT");
 
-                    var xvel = 15;
+                    var xvel = Math.floor(Math.random() * 100) + 50;
                     var yvel = Math.floor(Math.random() * 100) + 50;
                 
                     this.player.flipped? xvel *= -1 : xvel;

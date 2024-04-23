@@ -133,9 +133,14 @@ export class Shop {
                 if (this.collision(this.player.attackBox, element)) {
                     console.log("ENEMY HIT");
 
+                    var xvel = 15;
+                    var yvel = Math.floor(Math.random() * 100) + 50;
+                
+                    this.player.flipped? xvel *= -1 : xvel;
+
                     Matter.Body.setVelocity(
                         element.body,
-                        { x: 15, y: 75 }
+                        { x: xvel, y: yvel }
                     );
 
                 }

@@ -10,7 +10,7 @@ export class Player {
     constructor(
         {
             position,
-            debug = true,
+            debug = false,
             flipped = false,
             gravity
         }

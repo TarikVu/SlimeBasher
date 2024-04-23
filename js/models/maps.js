@@ -133,6 +133,11 @@ export class Shop {
                 if (this.collision(this.player.attackBox, element)) {
                     console.log("ENEMY HIT");
 
+                    Matter.Body.setVelocity(
+                        element.body,
+                        { x: 15, y: 75 }
+                    );
+
                 }
                 else {
                     console.log("Nothing was hit");

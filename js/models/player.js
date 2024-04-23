@@ -81,7 +81,7 @@ export class Player {
 
 
     update(ctrl) {
-        console.log(ctrl);
+        //console.log(ctrl);
 
         if (ctrl.keys === undefined || ctrl.keys.length == 0) {
             this.setState(IDLE);

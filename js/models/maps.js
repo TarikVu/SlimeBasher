@@ -130,7 +130,8 @@ export class Shop {
             console.log("attacking");
 
             this.enemies.forEach((element) => {
-                if (this.collision(this.player, element)) {
+                if (this.collision(this.player.attackBox, element)) {
+                    console.log("ENEMY HIT");
 
                 }
                 else {
@@ -140,8 +141,19 @@ export class Shop {
         }
     }
 
-    collision(attackBox, slime) {
-        return false;
+    collision(attackBox, enemy) {
+
+        
+
+        var min_x = attackBox.position.x
+        var min_y = attackBox.position.y
+
+        var max_x = attackBox.position.x + attackBox.width;
+        var max_y = attackBox.position.y + attackBox.height;
+        
+        return ((enemy.position.x > min_x && enemy.position.x < max_x) &&
+            (enemy.position.y > min_y && enemy.position.y < max_y))
+
     }
 
 

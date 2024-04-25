@@ -67,12 +67,8 @@ Sprite animation with matter.js
 - [Detecting monitor hz](https://stackoverflow.com/questions/6131051/is-it-possible-to-find-out-what-is-the-monitor-frame-rate-in-javascript)
 
 
-
 ### Free Assets Credits
 - [Main Character](https://rvros.itch.io/animated-pixel-hero)
 - [Backgrounds](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
 - [Enviroment Assets](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
 - [Pause Menu](https://srtoasty.itch.io/ui-assets-pack-2)
-
-
-

@@ -32,7 +32,7 @@ export class Game {
         this.world = this.engine.world;
 
         this.player = new Player({
-            gravity:this.engine.gravity,
+            gravity: this.engine.gravity,
             position: { x: 200, y: 100 },
         });
 
@@ -58,6 +58,8 @@ export class Game {
         // This helps normalize the physics engines on different refresh rates.
         // IMPORTANT**** THIS WAY OF scaling for delta may need to be applied for velocity of movement
         // and other logic as well.
+        // May need to set game's refresh to a baseline 60fps. this is causing issues for
+        // the physics calculations.
         if (this.fps == 60) {
             this.engine.gravity.scale = 0.01
         } else {
@@ -75,7 +77,7 @@ export class Game {
 
         // Updates the current gameworld's map.
         this.map.update(this.ctrl);
-    
+
     }
 
 

@@ -19,11 +19,12 @@ export class Game {
         {
             engine,
             fps,
+            ctx,
             width,
             height
         }
     ) {
-
+        this.ctx = ctx;
         this.width = width;
         this.height = height;
 
@@ -40,10 +41,11 @@ export class Game {
         this.map = new Shop(this, this.player);
 
         // Add to move the sprites w/ the mouse (for now)
-        const mouseConstraint = Matter.MouseConstraint.create(
+       /*   const mouseConstraint = Matter.MouseConstraint.create(
             this.engine, { element: canvas }
         );
-        Composite.add(this.world, mouseConstraint)
+
+        Composite.add(this.world, mouseConstraint)  */
 
         this.fps = fps;
 

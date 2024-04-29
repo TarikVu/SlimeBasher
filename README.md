@@ -66,6 +66,8 @@ Sprite animation with matter.js
 
 - [Detecting monitor hz](https://stackoverflow.com/questions/6131051/is-it-possible-to-find-out-what-is-the-monitor-frame-rate-in-javascript)
 
+- [Using Matter.js' Renderer alongside gamescreen](https://github.com/liabru/matter-js/issues/955)
+
 
 ### Free Assets Credits
 - [Main Character](https://rvros.itch.io/animated-pixel-hero)

@@ -69,12 +69,8 @@ Sprite animation with matter.js
 - [Using Matter.js' Renderer alongside gamescreen](https://github.com/liabru/matter-js/issues/955)
 
 
-
 ### Free Assets Credits
 - [Main Character](https://rvros.itch.io/animated-pixel-hero)
 - [Backgrounds](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
 - [Enviroment Assets](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
 - [Pause Menu](https://srtoasty.itch.io/ui-assets-pack-2)
-
-
-

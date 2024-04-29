@@ -119,7 +119,13 @@ export class Shop {
 
             // Respawn the enemy when knocked out of bounds.
             //console.log(this.bounds);
-            console.log(this.enemies[e].position);
+
+            console.log("pos");
+             console.log(this.enemies[e].position);
+            console.log("body");
+
+             console.log(this.enemies[e].body.position);
+
              if(this.enemies[e].position.x > this.bounds.width || this.enemies[e].position.x < -5){
 
                 this.enemies[e].position.x = 450;
@@ -127,13 +133,13 @@ export class Shop {
                 this.enemies[e].body.position.x = 450;
                 this.enemies[e].body.position.y = 450; 
  
+             }
+           
 
-            }
-/*
             if(this.enemies[e].position.y > this.bounds.height || this.enemies[e].position.y < 0){
                 this.enemies[e].position.x = 50;
                 this.enemies[e].position.y = 50;
-            } */
+            } 
 
         }
 

@@ -1,5 +1,4 @@
 import { Game } from './game.js'
-import { Controller } from './controller.js'
 
 // Utilize the event listener "load" to load in all assets "image"
 window.addEventListener('load', function () {
@@ -8,19 +7,35 @@ window.addEventListener('load', function () {
     const loading = this.document.getElementById('loading');
     loading.style.display = 'none';
 
-    this.window.canvas = document.getElementById("gamescreen");
+    var canvas = document.getElementById("gamescreen");
     this.window.ctx = canvas.getContext('2d');
+    var width = 1200;
+    var height = 900;  
+
+    canvas.width = width;
+    canvas.height = height;
+    var Engine = Matter.Engine,
+    Render = Matter.Render;
 
     // Set up game screen
-    /* canvas.width = 1600;
-    canvas.height = 1200; */
     
-     canvas.width = 1200;
-    canvas.height = 900; 
 
-    const engine = Matter.Engine.create();
+    var engine = Engine.create(canvas, {
+        options: {
+          width: width,
+          height: height,                  
+      }
+    });
 
-
+    var render = Render.create({
+        element: this.document.body,
+        engine: engine,
+        options: {
+            width: width,
+            height: height,
+            wireframes: false, 
+          }
+    });
 
     // Function that returns a Promise for the FPS
     const getFPS = () =>
@@ -43,11 +58,15 @@ window.addEventListener('load', function () {
             FPS = 144
         }
 
+
+        Render.run(render);
+
+
         const game = new Game({
             engine: engine,
             fps: FPS,
-            width: canvas.width,
-            height: canvas.height
+            width: 1200,
+            height: 900
         });
 
         ctx.imageSmoothingEnabled = false;

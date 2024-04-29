@@ -7,7 +7,7 @@ window.addEventListener('load', function () {
     const loading = this.document.getElementById('loading');
     loading.style.display = 'none';
 
-    var canvas = document.getElementById("gamescreen");
+    this.window.canvas = document.getElementById("gamescreen");
     this.window.ctx = canvas.getContext('2d');
     var width = 1200;
     var height = 900;  
@@ -60,11 +60,10 @@ window.addEventListener('load', function () {
 
 
         Render.run(render);
-
-
         const game = new Game({
             engine: engine,
             fps: FPS,
+            ctx:ctx,
             width: 1200,
             height: 900
         });

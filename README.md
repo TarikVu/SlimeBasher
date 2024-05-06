@@ -1,5 +1,5 @@
 # Slime Basher (Pre-Alpha) 🎮
-<br/>
+
 ![example](https://github.com/TarikVu/imgs/blob/main/SlimeBasher/SlimeBasher_example.PNG?raw=true)
 
 [Game Wiki page➡](https://github.com/TarikVu/Deepwood/wiki)

@@ -1,5 +1,4 @@
 # Slime Basher (Pre-Alpha) 🎮
-Slime Basher is a browser-based game composed of HTML5, CANVAS, and JavaScript.
 <br/>
 ![example](https://github.com/TarikVu/imgs/blob/main/SlimeBasher/SlimeBasher_example.PNG?raw=true)
 

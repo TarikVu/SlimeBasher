@@ -1,5 +1,4 @@
 import { Game } from './game.js'
-import { Controller } from './controller.js'
 
 // Utilize the event listener "load" to load in all assets "image"
 window.addEventListener('load', function () {
@@ -10,19 +9,33 @@ window.addEventListener('load', function () {
 
     this.window.canvas = document.getElementById("gamescreen");
     this.window.ctx = canvas.getContext('2d');
+    var width = 1200;
+    var height = 900;  
 
-    // Set up game screen
-    /* canvas.width = 1600;
-    canvas.height = 1200; */
-    
-     canvas.width = 1200;
-    canvas.height = 900; 
+    canvas.width = width;
+    canvas.height = height;
+    var Engine = Matter.Engine,
+    Render = Matter.Render;
 
-    const engine = Matter.Engine.create();
+    // Inject game canvas into physics engine
+    var engine = Engine.create(canvas, {
+        options: {
+          width: width,
+          height: height,                  
+      }
+    });
 
+    var render = Render.create({
+        element: this.document.body,
+        engine: engine,
+        options: {
+            width: width,
+            height: height,
+            wireframes: false, 
+          }
+    });
 
-
-    // Function that returns a Promise for the FPS
+    // Used to detect the monitor hertz
     const getFPS = () =>
         new Promise(resolve =>
             requestAnimationFrame(t1 =>
@@ -36,6 +49,7 @@ window.addEventListener('load', function () {
     // Detect monitor Hz then create game using either
     // 60 fps or 144 fps.
     getFPS().then(result => {
+
         if (result < 120) {
             FPS = 60
         }
@@ -43,11 +57,14 @@ window.addEventListener('load', function () {
             FPS = 144
         }
 
+
+        Render.run(render);
         const game = new Game({
             engine: engine,
             fps: FPS,
-            width: canvas.width,
-            height: canvas.height
+            ctx:ctx,
+            width: 1200,
+            height: 900
         });
 
         ctx.imageSmoothingEnabled = false;

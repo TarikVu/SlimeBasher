@@ -105,7 +105,7 @@ export class Player {
   */
 
         // use of includes makes for smoother gameplay
-        if (ctrl.keys.includes(' ')) {
+        if (ctrl.keys.includes('q')) {
             this.setState(ATTACKING);
         }
 

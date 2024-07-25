@@ -25,7 +25,9 @@
 ## <a name="lib"></a> Libraries
 ### Matter.js
 An open sourced libary with a robust physics engine commonly used in (browser) games.
+
 [Official Documentation➡](https://brm.io/matter-js/)
+
 ![matter](https://github.com/TarikVu/imgs/blob/main/SlimeBasher/matterlogo.png?raw=true)
 
 ## <a name="arch"></a> Architecture

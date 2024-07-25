@@ -1,6 +1,6 @@
 # Slime Basher (Pre-Alpha) 🎮
 
-[Game Preview➡](https://github.com/TarikVu/Deepwood/wiki)
+[Game Preview➡](https://tarikvu.github.io/)
 
 
 [Game Wiki page➡](https://github.com/TarikVu/Deepwood/wiki)

@@ -14,7 +14,7 @@ export class Controller {
                 key === 'a' ||
                 key === 's' ||
                 key === 'd' ||
-                key === ' ' ||
+                key === 'q' ||
                 key === 'escape') &&
                 this.keys.indexOf(e.key) === -1) {
 
@@ -32,7 +32,7 @@ export class Controller {
                 key === 'a' ||
                 key === 's' ||
                 key === 'd' ||
-                key === ' ' ||
+                key === 'q' ||
                 key === 'escape') {
                 this.keys.splice(this.keys.indexOf(e.key), 1)
 

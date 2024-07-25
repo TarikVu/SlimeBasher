@@ -49,13 +49,13 @@ export class Shop {
         this.enemies.push(this.slime);
         this.bodies.push(this.slime.body);
 
-       /*  this.slime2 = new Slime({
-            position: { x: 550, y: 50 },
-        });
-
-        this.enemies.push(this.slime2);
-        this.bodies.push(this.slime2.body);
- */
+        /*  this.slime2 = new Slime({
+             position: { x: 550, y: 50 },
+         });
+ 
+         this.enemies.push(this.slime2);
+         this.bodies.push(this.slime2.body);
+  */
 
         //floor
         const floorImage = document.getElementById("grass");
@@ -115,10 +115,10 @@ export class Shop {
         this.drawBG();
 
         for (var e in this.enemies) {
-            this.enemies[e].update()
 
             // Respawn the enemy when knocked out of bounds.
             //console.log(this.bounds);
+
 
             console.log("pos");
              console.log(this.enemies[e].position);
@@ -141,6 +141,7 @@ export class Shop {
                 this.enemies[e].position.y = 50;
             } 
 
+
         }
 
         for (var t in this.tiles) {
@@ -160,11 +161,13 @@ export class Shop {
 
                     var xvel = Math.floor(Math.random() * 100) + 50;
                     var yvel = Math.floor(Math.random() * 100) + 50;
-                
-                    this.player.flipped? xvel *= -1 : xvel;
 
-                    Matter.Body.setVelocity(
+                    this.player.flipped ? xvel *= -1 : xvel;
+
+                    // Experiment w/ apply force
+                    Matter.Body.applyForce(
                         element.body,
+                        element.body.position,
                         { x: xvel, y: yvel }
                     );
 
@@ -172,20 +175,23 @@ export class Shop {
                 else {
                     console.log("Nothing was hit");
                 }
+
+                this.enemies[e].update()
+
             })
         }
     }
 
     collision(attackBox, enemy) {
 
-        
+
 
         var min_x = attackBox.position.x
         var min_y = attackBox.position.y
 
         var max_x = attackBox.position.x + attackBox.width;
         var max_y = attackBox.position.y + attackBox.height;
-        
+
         return ((enemy.position.x > min_x && enemy.position.x < max_x) &&
             (enemy.position.y > min_y && enemy.position.y < max_y))
 

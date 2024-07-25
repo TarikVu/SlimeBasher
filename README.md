@@ -1,8 +1,12 @@
 # Slime Basher (Pre-Alpha) 🎮
 
-![example](https://github.com/TarikVu/imgs/blob/main/SlimeBasher/SlimeBasher_example.PNG?raw=true)
+[Game Preview➡](https://github.com/TarikVu/Deepwood/wiki)
+
 
 [Game Wiki page➡](https://github.com/TarikVu/Deepwood/wiki)
+
+![example](https://github.com/TarikVu/imgs/blob/main/SlimeBasher/SlimeBasher_example.PNG?raw=true)
+
 
 ## Table of Contents
 1. [Features](#feats)

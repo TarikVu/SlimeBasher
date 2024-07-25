@@ -17,7 +17,9 @@ window.addEventListener('load', function () {
     var Engine = Matter.Engine,
     Render = Matter.Render;
 
-    // Inject game canvas into physics engine
+    // Set up game screen
+    
+
     var engine = Engine.create(canvas, {
         options: {
           width: width,
@@ -35,7 +37,7 @@ window.addEventListener('load', function () {
           }
     });
 
-    // Used to detect the monitor hertz
+    // Function that returns a Promise for the FPS
     const getFPS = () =>
         new Promise(resolve =>
             requestAnimationFrame(t1 =>

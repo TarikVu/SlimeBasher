@@ -42,7 +42,7 @@ export class Controller {
         });
 
         // Mouse Handler
-         canvas.addEventListener("mousemove", e => {
+       /*   canvas.addEventListener("mousemove", e => {
             let rect = canvas.getBoundingClientRect();
             let x = e.clientX - rect.left;
             let y = e.clientY - rect.top;
@@ -58,7 +58,7 @@ export class Controller {
         canvas.addEventListener("mouseup", e=> {
             this.mouse.down = false; 
             this.mouse.up = true;
-        });
+        }); */
 
     }
 

@@ -19,11 +19,12 @@ export class Game {
         {
             engine,
             fps,
+            ctx,
             width,
             height
         }
     ) {
-
+        this.ctx = ctx;
         this.width = width;
         this.height = height;
 
@@ -32,7 +33,7 @@ export class Game {
         this.world = this.engine.world;
 
         this.player = new Player({
-            gravity:this.engine.gravity,
+            gravity: this.engine.gravity,
             position: { x: 200, y: 100 },
         });
 
@@ -40,10 +41,11 @@ export class Game {
         this.map = new Shop(this, this.player);
 
         // Add to move the sprites w/ the mouse (for now)
-        const mouseConstraint = Matter.MouseConstraint.create(
+       /*   const mouseConstraint = Matter.MouseConstraint.create(
             this.engine, { element: canvas }
         );
-        Composite.add(this.world, mouseConstraint)
+
+        Composite.add(this.world, mouseConstraint)  */
 
         this.fps = fps;
 
@@ -58,6 +60,8 @@ export class Game {
         // This helps normalize the physics engines on different refresh rates.
         // IMPORTANT**** THIS WAY OF scaling for delta may need to be applied for velocity of movement
         // and other logic as well.
+        // May need to set game's refresh to a baseline 60fps. this is causing issues for
+        // the physics calculations.
         if (this.fps == 60) {
             this.engine.gravity.scale = 0.01
         } else {
@@ -75,7 +79,7 @@ export class Game {
 
         // Updates the current gameworld's map.
         this.map.update(this.ctrl);
-    
+
     }
 
 

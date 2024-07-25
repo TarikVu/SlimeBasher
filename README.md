@@ -1,6 +1,5 @@
 # Slime Basher (Pre-Alpha) 🎮
-Slime Basher is a browser-based game composed of HTML5, CANVAS, and JavaScript.
-<br/>
+
 ![example](https://github.com/TarikVu/imgs/blob/main/SlimeBasher/SlimeBasher_example.PNG?raw=true)
 
 [Game Wiki page➡](https://github.com/TarikVu/Deepwood/wiki)
@@ -66,6 +65,7 @@ Sprite animation with matter.js
 
 - [Detecting monitor hz](https://stackoverflow.com/questions/6131051/is-it-possible-to-find-out-what-is-the-monitor-frame-rate-in-javascript)
 
+- [Using Matter.js' Renderer alongside gamescreen](https://github.com/liabru/matter-js/issues/955)
 
 
 ### Free Assets Credits
@@ -73,6 +73,3 @@ Sprite animation with matter.js
 - [Backgrounds](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
 - [Enviroment Assets](https://free-game-assets.itch.io/free-summer-pixel-art-backgrounds)
 - [Pause Menu](https://srtoasty.itch.io/ui-assets-pack-2)
-
-
-

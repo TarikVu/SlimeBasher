@@ -10,7 +10,8 @@
 
 ## Table of Contents
 1. [Features](#feats)
-1. [Design](#design)
+1. [Libaries](#lib) 
+1. [Architecture](#arch)
 1. [Planned Features](#pfeats)
 1. [Development Notes](#devnotes)
 1. [Appendix](#apdx)
@@ -21,8 +22,13 @@
   - Splits a sprite sheet equalatterally into rows and collums for easy access to frame animations.
   - Provides ease of use to animate, scale, and update the sprites.
 
+## <a name="lib"></a> Libraries
+### Matter.js
+An open sourced libary with a robust physics engine commonly used in (browser) games.
+[Official Documentation➡](https://brm.io/matter-js/)
+![matter](https://github.com/TarikVu/imgs/blob/main/SlimeBasher/matterlogo.png?raw=true)
 
-## <a name="design"></a> Design
+## <a name="arch"></a> Architecture
 ![diagram](https://github.com/TarikVu/imgs/blob/main/SlimeBasher/slimebasher_diagram.PNG?raw=true)
 
 
